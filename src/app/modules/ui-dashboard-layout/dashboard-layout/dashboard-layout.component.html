@@ -1,0 +1,46 @@
+<mat-drawer-container class="main-layout">
+  <!-- <mat-drawer
+    [mode]="(smallDevice$ | async) ? 'over' : 'side'"
+    [opened]="(smallDevice$ | async) === false || opened"
+  >
+    <koodaki-dashboard-sidenav
+      [menuItems]="menuItems"
+      [logo]="'assets/images/logo/logo.accent.full.png'"
+      [user]="user"
+    ></koodaki-dashboard-sidenav>
+  </mat-drawer> -->
+  <mat-drawer-content role="region">
+    <koodaki-dashboard-header (hamburgerClick)="toggleSidenav()">
+      <mat-toolbar
+        class="bg-forth border-bottom flex items-stretch justify-start"
+        content
+      >
+        <div class="flex-auto">
+          <ng-container *ngFor="let item of menuItems">
+            <button
+              mat-menu-item
+              [routerLink]="'/' + item.link"
+              [routerLinkActiveOptions]="{ exact: false }"
+              routerLinkActive="menu-item--active"
+              class="fs-sm text-color py8 px16 ml8"
+            >
+              <mat-icon
+                *ngIf="item.icon"
+                fontSet="fas"
+                [fontIcon]="item.icon"
+                class="mat-icon--sm middle ml8"
+              >
+              </mat-icon>
+              <span class="ins-action__title fw-normal">{{
+                item.textToken
+              }}</span>
+            </button>
+          </ng-container>
+        </div>
+      </mat-toolbar>
+    </koodaki-dashboard-header>
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </mat-drawer-content>
+</mat-drawer-container>

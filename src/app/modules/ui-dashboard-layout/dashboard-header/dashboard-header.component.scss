@@ -1,0 +1,25 @@
+@import 'settings/settings.scss';
+
+.header {
+  $self: &;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: $navbar-height;
+  padding: 0 $gap-sm;
+}
+
+@media screen and (min-width: 60em) {
+  .header {
+    $self: &;
+
+    &--small-screens {
+      display: none !important;
+
+      #{$self}__logo {
+        justify-content: flex-start;
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "customer",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "serve": "ng serve",
+    "build": "ng build",
+    "build:prod": "ng run customer:build:production",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^15.0.0",
+    "@angular/cdk": "^15.0.0",
+    "@angular/common": "^15.0.0",
+    "@angular/compiler": "^15.0.0",
+    "@angular/core": "^15.0.0",
+    "@angular/forms": "^15.0.0",
+    "@angular/material": "^15.0.1",
+    "@angular/platform-browser": "^15.0.0",
+    "@angular/platform-browser-dynamic": "^15.0.0",
+    "@angular/router": "^15.0.0",
+    "@fortawesome/fontawesome-free": "^6.2.1",
+    "@ngrx/effects": "^14.3.2",
+    "@ngrx/store": "^14.3.2",
+    "@types/lodash-es": "^4.17.6",
+    "@types/store": "^2.0.2",
+    "@types/uuid": "^8.3.4",
+    "dayjs": "^1.11.6",
+    "lodash-es": "^4.17.21",
+    "rxjs": "~7.5.0",
+    "store": "^2.0.12",
+    "subsink": "^1.0.2",
+    "tslib": "^2.3.0",
+    "uuid": "^9.0.0",
+    "zone.js": "~0.12.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^15.0.1",
+    "@angular/cli": "~15.0.1",
+    "@angular/compiler-cli": "^15.0.0",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.5.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~4.8.2"
+  }
+}

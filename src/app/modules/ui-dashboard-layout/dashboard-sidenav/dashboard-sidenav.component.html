@@ -1,0 +1,84 @@
+<div class="ins-sidenav flex flex-column">
+  <!-- Logo -->
+  <div
+    *ngIf="0"
+    class="ins-sidenav_logo plgap border-bottom flex justify-start items-center"
+  >
+    <img
+      src="assets/images/logo/logo-admin-accent.svg"
+      alt=""
+      routerLink="/"
+      class="pointer"
+      width="115px"
+    />
+  </div>
+
+  <div class="flex-auto">
+    <!-- Custom content -->
+    <ng-content select="[customContent]"></ng-content>
+
+    <!-- Menu Items -->
+    <div class="ptgap" *ngIf="menuItems?.length">
+      <ng-container *ngFor="let item of menuItems">
+        <a
+          [routerLink]="'/' + item.link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="ins-action--active"
+          class="ins-action py8 pr16 text-color fs-sm"
+        >
+          <mat-icon
+            *ngIf="item.icon"
+            fontSet="fas"
+            [fontIcon]="item.icon"
+            class="mat-icon--sm"
+          >
+          </mat-icon>
+          <span class="ins-action__title fw-normal mr16">{{
+            item.textToken
+          }}</span>
+        </a>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Profile -->
+  <div
+    *ngIf="0"
+    class="ins-sidenav__actions ins-sidenav__actions--profile border-top"
+  >
+    <div
+      class="pointer height-100 px12 flex items-center flex-gap-12"
+      [matMenuTriggerFor]="appMenu"
+    >
+      <!-- <koodaki-avatar [data]="user"></koodaki-avatar> -->
+      <span class="ins-action__title ins-action__title--name">{{
+        user?.name
+      }}</span>
+    </div>
+
+    <!-- Menu -->
+    <mat-menu
+      #appMenu="matMenu"
+      backdropClass="menu-backdrop--account"
+      yPosition="above"
+    >
+      <div
+        *ngIf="user"
+        class="account-menu-header"
+        mat-ripple
+        [routerLink]="'/account/' + user.id"
+      >
+        <!-- <koodaki-avatar [data]="user" [size]="3"></koodaki-avatar> -->
+
+        <div class="account-menu-header__details">
+          <span *ngIf="workspace">{{
+            "enums.role." + (workspace.role || "" | camelcase)
+          }}</span>
+          <h5>{{ user.name }}</h5>
+        </div>
+      </div>
+
+      <ng-content select="[menuContent]"> </ng-content>
+    </mat-menu>
+  </div>
+</div>

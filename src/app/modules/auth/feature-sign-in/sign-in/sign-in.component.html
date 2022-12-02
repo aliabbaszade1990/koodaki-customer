@@ -1,0 +1,40 @@
+<div class="page-sign-in flex flex-column items-center justify-center">
+  <div class="bg-forth br-md box-shadow p40 container--xs">
+    <img
+      src="assets/images/logo-koodaki.png"
+      width="120px"
+      class="block mxa"
+      alt=""
+    />
+    <h3 class="primary center sign-in_title">استودیو کودکی</h3>
+
+    <h5>ورود به پنل کاربری</h5>
+    <p class="fs-sm">سلام!</p>
+    <p class="fs-sm">لطفا شماره موبایل خودتون رو وارد کنید.</p>
+    <br />
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>شماره موبایل</mat-label>
+        <input
+          matInput
+          placeholder="۰۹۱۲*******"
+          formControlName="phoneNumber"
+          required
+          class="left"
+          dir="ltr"
+        />
+      </mat-form-field>
+
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="form.invalid"
+        class="block width-100"
+        type="submit"
+        (click)="continue()"
+      >
+        ادامه
+      </button>
+    </form>
+  </div>
+</div>

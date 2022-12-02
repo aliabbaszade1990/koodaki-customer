@@ -1,0 +1,122 @@
+<div class="page-choose-files flex">
+  <!-- List -->
+  <div fxFlex="200px" class="list">
+    <div class="images_list pgap relative" #imageList>
+      <div
+        class="image-wrapper mbgap relative"
+        *ngFor="let image of images; let i = index"
+        [class.is-current]="image.isCurrentItem"
+        [class.is-selected]="image.selected"
+        [id]="image.id"
+      >
+        <img
+          [src]="'./assets/images/saeidifar/' + image.src"
+          class="image block pointer"
+          (click)="onClickImage(image)"
+          alt=""
+        />
+
+        <div class="image-wrapper_icons flex flex-gap-12">
+          <mat-icon
+            *ngIf="image.comment.length"
+            class="image-warpper_icon image-warpper_icon--comment"
+            fontSet="fas"
+            fontIcon="fa-comment"
+            color="accent"
+          ></mat-icon>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom -->
+    <div
+      class="images_top border-top pxgap overflow-hidden flex items-center justify-center"
+    >
+      <div>{{ images.length }} آیتم</div>
+      <div class="left">
+        <button mat-icon-button>
+          <mat-icon fontSet="fas" fontIcon="fa-filter"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Content -->
+  <div fxFlex="calc(100% - 240px)" class="content border-right bg-third">
+    <!-- Slider -->
+    <div
+      #slider
+      class="slider relative pgap overflow-hidden flex flex-column justify-center items-center"
+    >
+      <img
+        #image
+        [src]="'./assets/images/saeidifar/' + currentItem.src"
+        class="block mbgap"
+        [class.is-selected]="currentItem.selected"
+        alt=""
+      />
+
+      <!-- Navigators -->
+      <div
+        class="navigator navigator--left pointer flex flex-column items-center justify-center"
+        (click)="onClickNavigationPreviouse()"
+      >
+        <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
+      </div>
+      <div
+        class="navigator navigator--right pointer flex flex-column items-center justify-center"
+        (click)="onClickNavigationNext()"
+      >
+        <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
+      </div>
+    </div>
+    <!-- Toolbar -->
+    <div
+      class="toolbar border-top py4 pxgap bg-forth flex items-center justify-center"
+    >
+      <!-- Right -->
+      <div fxFlex class="border-left pxgap left flex flex-gap-16 justify-end">
+        <button
+          mat-icon-button
+          (click)="toggleSelectedImage()"
+          matTooltip="انتخاب کنید"
+          color="accent"
+        >
+          <mat-icon
+            [fontSet]="currentItem.selected ? 'fas' : 'far'"
+            fontIcon="fa-bookmark"
+          ></mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="onClickComment()"
+          matTooltip="یادداشت بگذارید"
+          [disabled]="!currentItem.selected"
+        >
+          <mat-icon
+            [fontSet]="currentItem.comment.length ? 'fas' : 'far'"
+            [color]="currentItem.comment.length ? 'accent' : ''"
+            fontIcon="fa-comment"
+          ></mat-icon>
+        </button>
+      </div>
+      <!-- Left -->
+      <div fxFlex class="pxgap flex flex-gap-16">
+        <button
+          mat-icon-button
+          (click)="onClickDelete()"
+          matTooltip="حذف کنید"
+          color="warn"
+        >
+          <mat-icon fontSet="fas" fontIcon="fa-trash-alt"></mat-icon>
+        </button>
+        <button mat-icon-button (click)="onClickRotate()" matTooltip="بچرخانید">
+          <img
+            src="assets/images/rotation.png"
+            alt=""
+            width="24px"
+            height="24px"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

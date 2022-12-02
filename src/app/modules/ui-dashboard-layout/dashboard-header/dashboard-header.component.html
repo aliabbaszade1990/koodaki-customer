@@ -1,0 +1,33 @@
+<!-- Mobile -->
+<mat-toolbar class="header header--small-screens">
+  <div class="header__hamburger">
+    <button
+      class="menu-button"
+      mat-icon-button
+      color="accent"
+      (click)="onHamburgerClicked()"
+    >
+      <mat-icon
+        size
+        aria-hidden="false"
+        aria-label="Account"
+        fontSet="fas"
+        fontIcon="fa-bars"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <a *ngIf="mobileHeaderLogo" class="header__logo" routerLink="/">
+    <img
+      src="assets/images/logo/logo-admin-accent.svg"
+      alt=""
+      class="pointer"
+      width="115px"
+    />
+  </a>
+</mat-toolbar>
+
+<!-- Greater than mobile -->
+<mat-toolbar class="header header--title bg-forth border-bottom pxgap flex">
+  <ng-content select="[content]"> </ng-content>
+</mat-toolbar>

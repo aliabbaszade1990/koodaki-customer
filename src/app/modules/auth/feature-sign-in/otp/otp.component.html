@@ -1,0 +1,44 @@
+<div class="page-otp flex flex-column items-center justify-center">
+  <div class="bg-forth br-md box-shadow p40 container--xs">
+    <h5>تایید</h5>
+    <p class="fs-sm">رمز یک‌بار مصرف به شماره ---------- پیامک شد.</p>
+    <br />
+    <form [formGroup]="form" class="contrary">
+      <mat-form-field appearance="outline">
+        <mat-label>کد</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="۱۲۳۴"
+          formControlName="code"
+          class="always-ltr"
+        />
+      </mat-form-field>
+      <div class="flex items-end justify-center gap-16">
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="form.invalid || inProgress"
+          (click)="login()"
+        >
+          ورود
+        </button>
+        <div class="right">
+          <div *ngIf="(time | async) !== 0; else sendAgainButton">
+            {{ time | async }} <span class="op6">ثانیه</span>
+          </div>
+          <ng-template #sendAgainButton>
+            <button
+              mat-flat-button
+              [disabled]="inProgress"
+              (click)="callOtpAgain()"
+              class="width-100"
+            >
+              ارسال مجدد کد
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

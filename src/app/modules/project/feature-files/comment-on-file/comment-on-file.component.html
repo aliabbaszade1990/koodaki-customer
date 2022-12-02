@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  <h5 mat-dialog-title>
+    برای این فایل یادداشت بگذارید
+    <p class="fs-sm">
+      اگر نکته ای مرتبط با این فایل وجود دارد بنویسید تا قبل از چاپ رسیدگی شود
+    </p>
+  </h5>
+  <div mat-dialog-content>
+    <div class="pxgap pt32 pbgap">
+      <mat-form-field appearance="outline">
+        <mat-label>کامنت</mat-label>
+        <textarea
+          matInput
+          formControlName="comment"
+          class="width-100"
+          rows="12"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex justify-between items-center">
+    <button
+      [disabled]="form.invalid"
+      mat-flat-button
+      color="accent"
+      type="submit"
+      (click)="saveComment()"
+    >
+      ذخیره
+    </button>
+    <button mat-stroked-button mat-dialog-close>نه، منصرف شدم</button>
+  </div>
+</form>
