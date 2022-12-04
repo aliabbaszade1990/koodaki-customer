@@ -50,6 +50,7 @@ export class ProjectFilesComponent implements OnInit {
   onClickComment() {
     this.dialog
       .open(CommentOnFileComponent, {
+        direction: 'rtl',
         width: '500px',
       })
       .afterClosed()
@@ -61,6 +62,7 @@ export class ProjectFilesComponent implements OnInit {
   onClickDelete() {
     this.dialog
       .open(ConfirmationComponent, {
+        direction: 'rtl',
         data: {
           title: 'از حذف این فایل مطمئن هستی؟',
           subtitle: 'در صورت حذف امکان بازیابی فایل وجود ندارد',

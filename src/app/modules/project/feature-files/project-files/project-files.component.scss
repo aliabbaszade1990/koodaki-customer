@@ -5,12 +5,14 @@ $page-height: calc(100vh - $navbar-height);
   height: $page-height;
   .list {
     height: $page-height;
+    flex: 0 0 200px;
+    width: 200px;
 
-    &_top {
+    &_bottom {
       height: $navbar-height;
     }
 
-    &_list {
+    &_items {
       height: calc($page-height - $navbar-height);
       overflow-y: auto;
       scroll-behavior: smooth;
@@ -44,18 +46,12 @@ $page-height: calc(100vh - $navbar-height);
   }
 
   .content {
+    flex: 0 0 calc(100% - 200px);
+    width: calc(100% - 200px);
     .toolbar {
       height: $navbar-height;
       overflow-y: hidden;
       overflow-x: auto;
-      .image-wrapper {
-        img {
-          width: 100%;
-          margin: 0;
-          max-height: 100%;
-          max-width: 100%;
-        }
-      }
     }
 
     .slider {

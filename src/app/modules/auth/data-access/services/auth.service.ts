@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '@koodaki/shared/utils';
+import { StorageService } from 'src/app/modules/core';
 import { UserAuthResultDTO } from '../dto/user-auth-result.dto';
 
 @Injectable()

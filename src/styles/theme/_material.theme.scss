@@ -100,39 +100,6 @@ $material-warn-color: (
   ),
 );
 
-$material-x-color: (
-  50: #fbfefe,
-  100: #f5fcfb,
-  200: #eefaf9,
-  300: #e7f7f7,
-  400: #e1f6f5,
-  500: #dcf4f3,
-  600: #d8f3f1,
-  700: #d3f1ef,
-  800: #ceefed,
-  900: #c5ecea,
-  A100: #ffffff,
-  A200: #ffffff,
-  A400: #ffffff,
-  A700: #ffffff,
-  contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #000000,
-    400: #000000,
-    500: #000000,
-    600: #000000,
-    700: #000000,
-    800: #000000,
-    900: #000000,
-    A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #000000,
-  ),
-);
-
 @include mat.core();
 
 $material-koodaki-app-primary: mat.define-palette($material-primary-color);
@@ -150,14 +117,11 @@ $koodaki-theme: mat.define-light-theme(
     density: 0,
   )
 );
+$form-field-theme: mat.define-light-theme(
+  (
+    density: -2,
+  )
+);
 
 @include mat.all-component-themes($koodaki-theme);
-
-html,
-body {
-  margin: 0;
-}
-
-* {
-  font-family: "Montserrat", sans-serif;
-}
+@include mat.form-field-theme($form-field-theme);

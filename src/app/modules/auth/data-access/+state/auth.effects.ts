@@ -4,7 +4,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { AuthApiService } from '../apis/auth-api.service';
 import { AuthService } from '../services/auth.service';
 
-import * as CoreActions from '@koodaki/customer/core';
+import * as CoreActions from '../../../core/+state/core.actions';
 import * as AuthActions from './auth.actions';
 
 @Injectable()

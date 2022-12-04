@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { AngularMaterialModule } from '../../shared';
+import { ProjectCardComponent } from './project-card/project-card.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  declarations: [ProjectCardComponent],
+  imports: [CommonModule, RouterModule, AngularMaterialModule],
+  exports: [ProjectCardComponent],
 })
-export class UiProjectCardModule { }
+export class UiProjectCardModule {}

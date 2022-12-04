@@ -1,4 +1,4 @@
-@import 'settings/settings.scss';
+@import "settings/settings.scss";
 
 //#region Button Toggle
 .mat-button-toggle-group-appearance-standard {
@@ -132,43 +132,16 @@
 //#endregion
 
 //#region Button
-button.mat-icon-button {
-  // line-height: unset;
-}
-
-.mat-button,
-.mat-icon-button,
-.mat-stroked-button,
-.mat-flat-button {
-  // line-height: 30px !important;
-}
-
-.mat-icon-button {
-  // height: 34px !important;
-  // width: 34px !important;
+.mdc-button .mdc-button__label {
+  letter-spacing: normal;
 }
 
 //#endregion
 
 //#region mat-form-field
-.mat-form-field {
+.mat-mdc-form-field {
   width: 100%;
-
-  .mat-form-field-infix {
-    width: auto;
-  }
-
-  &.p0 {
-    .mat-form-field-wrapper {
-      padding: 0;
-    }
-  }
 }
-
-.mat-form-field-appearance-outline .mat-form-field-prefix {
-  top: 0 !important;
-}
-
 //#endregion
 
 //#region Dialog
@@ -265,7 +238,7 @@ button.mat-icon-button {
 //#endregion
 
 //#region Snackbar
-.mat-snack-bar-container[class*='ins-snackbar'] {
+.mat-snack-bar-container[class*="ins-snackbar"] {
   padding: 10px 12px;
   min-height: auto;
   max-width: 400px;
@@ -280,6 +253,6 @@ button.mat-icon-button {
 //#region Font Family
 .mat-dialog-title,
 .mat-tooltip {
-  font-family: 'iranSans' !important;
+  font-family: "iranSans" !important;
 }
 //#endregion

@@ -12,6 +12,7 @@ import { UnautherizedGuard } from './guards/unautherized.guard';
 import { CoreInterceptor } from './interceptors/core.interceptor';
 import { CoreAuthService } from './services/core-auth.service';
 import { InitializationService } from './services/initialization.service';
+import { SnackbarService } from './services/snackbar.service';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { InitializationService } from './services/initialization.service';
     InitializationService,
     AutherizedGuard,
     UnautherizedGuard,
+    SnackbarService,
   ],
 })
 export class CoreModule {}

@@ -1,7 +1,7 @@
 <div class="page-choose-files flex">
   <!-- List -->
-  <div fxFlex="200px" class="list">
-    <div class="images_list pgap relative" #imageList>
+  <div class="list">
+    <div class="list_items pgap relative" #imageList>
       <div
         class="image-wrapper mbgap relative"
         *ngFor="let image of images; let i = index"
@@ -29,7 +29,7 @@
     </div>
     <!-- Bottom -->
     <div
-      class="images_top border-top pxgap overflow-hidden flex items-center justify-center"
+      class="images_bottom border-top pxgap overflow-hidden flex items-center justify-center"
     >
       <div>{{ images.length }} آیتم</div>
       <div class="left">
@@ -40,7 +40,7 @@
     </div>
   </div>
   <!-- Content -->
-  <div fxFlex="calc(100% - 240px)" class="content border-right bg-third">
+  <div class="content border-right bg-third">
     <!-- Slider -->
     <div
       #slider
