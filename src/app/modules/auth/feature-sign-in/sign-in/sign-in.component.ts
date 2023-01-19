@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { CoreFacade, SnackbarService } from 'src/app/modules/core';
 import { REGEX } from 'src/app/shared/constants';
 import { AuthFacade } from '../../data-access/+state/auth.facade';
+import { AuthApiService } from '../../data-access/apis/auth-api.service';
 
 @Component({
   selector: 'koodaki-sign-in',
@@ -17,7 +18,8 @@ export class SigninComponent implements OnInit {
     private authFacade: AuthFacade,
     private coreFacade: CoreFacade,
     private router: Router,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private authApi: AuthApiService
   ) {}
   form: FormGroup = this.fb.group({
     phoneNumber: [
@@ -27,6 +29,7 @@ export class SigninComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.authApi.otp({ phoneNumber: 'test' }).subscribe((result) => {});
     this.listenStore();
   }
 

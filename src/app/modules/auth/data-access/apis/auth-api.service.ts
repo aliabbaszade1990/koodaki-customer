@@ -16,10 +16,7 @@ export class AuthApiService {
     );
   }
 
-  otpLogin(model: LoginDTO): Observable<UserAuthResultDTO> {
-    return this.http.post<UserAuthResultDTO>(
-      this.endpointBase + '/login',
-      model
-    );
+  otp(model: { phoneNumber: string }): Observable<UserAuthResultDTO> {
+    return this.http.post<UserAuthResultDTO>(this.endpointBase + '/otp', null);
   }
 }

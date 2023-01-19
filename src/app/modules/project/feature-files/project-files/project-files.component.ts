@@ -114,8 +114,7 @@ export class ProjectFilesComponent implements OnInit {
   @ViewChild('image') image: ElementRef = new ElementRef(null);
   rotationDegree = 0;
   onClickRotate() {
-    this.rotationDegree =
-      this.rotationDegree === -270 ? 0 : this.rotationDegree - 90;
+    this.rotationDegree = this.rotationDegree - 90;
 
     this.renderer.setStyle(
       this.image.nativeElement,
