@@ -29,7 +29,7 @@ const reducer = createReducer(
   })),
   on(CoreActions.loginSuccess, (state, { result }) => ({
     ...state,
-    user: result.admin,
+    user: result.user,
   })),
   on(CoreActions.Initialized, (state) => ({
     ...state,

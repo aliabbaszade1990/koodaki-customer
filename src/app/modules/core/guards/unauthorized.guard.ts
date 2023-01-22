@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  CanActivateChild,
   Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { filter, firstValueFrom } from 'rxjs';
 import { CoreFacade } from '../+state/core.facade';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AutherizedGuard implements CanActivate, CanActivateChild {
+export class UnauthorizedGuard implements CanActivate {
   constructor(private coreFacade: CoreFacade, private router: Router) {}
+
   async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,31 +22,19 @@ export class AutherizedGuard implements CanActivate, CanActivateChild {
     const canView = await this.canView();
 
     if (!canView) {
-      this.router.navigate(
-        ['auth', 'sign-in', { outlets: { builder: null } }],
-        {
-          queryParams: { redirectedFrom: state.url },
-          replaceUrl: true,
-        }
-      );
+      this.router.navigate(['']);
     }
 
     return canView;
   }
 
-  async canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Promise<boolean | UrlTree> {
-    return this.canActivate(childRoute, state);
-  }
-
   private async canView(): Promise<boolean> {
-    await firstValueFrom(this.coreFacade.initialized$);
+    await firstValueFrom(
+      this.coreFacade.initialized$.pipe(filter((response) => !!response))
+    );
 
     const user = await firstValueFrom(this.coreFacade.user$);
 
-    // return !!user;
-    return true;
+    return !user;
   }
 }

@@ -22,14 +22,14 @@ export class SigninComponent implements OnInit {
     private authApi: AuthApiService
   ) {}
   form: FormGroup = this.fb.group({
-    phoneNumber: [
+    username: [
       null,
       [Validators.required, Validators.pattern(REGEX.cellphone)],
     ],
+    password: ['changeMe'],
   });
 
   ngOnInit(): void {
-    this.authApi.otp({ phoneNumber: 'test' }).subscribe((result) => {});
     this.listenStore();
   }
 
@@ -46,6 +46,16 @@ export class SigninComponent implements OnInit {
   }
 
   continue() {
+    this.standardizePhoneNumber();
     this.authFacade.login(this.form.value);
+  }
+
+  private standardizePhoneNumber(): void {
+    if (this.form.value.username[0] === '0') {
+      this.form.value.username = (this.form.value.username as string).replace(
+        '0',
+        '+98'
+      );
+    }
   }
 }

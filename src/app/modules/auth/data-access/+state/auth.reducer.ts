@@ -5,7 +5,7 @@ import * as AuthActions from './auth.actions';
 export const AUTH_FEATURE_KEY = 'auth';
 
 export interface AuthState {
-  error?: string | null; // last known error (if any)
+  error: string | null; // last known error (if any)
 }
 
 export const initialAuthState: AuthState = {

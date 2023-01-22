@@ -37,8 +37,8 @@ export class CoreInterceptor implements HttpInterceptor {
         retry(1),
         map((response) => {
           if (response instanceof HttpResponse) {
-            if (response.body.success === true) {
-              return response.clone({ body: response.body.payload });
+            if (response.ok === true) {
+              return response.clone({ body: response.body });
             } else {
               const { error } = response.body;
               throw new Error(error.name + ' => ' + error.message);
@@ -49,7 +49,7 @@ export class CoreInterceptor implements HttpInterceptor {
         }),
         catchError((error) => {
           this.handleErrors(error);
-          return throwError(() => Error(error.name));
+          return throwError(() => Error(error && error.name));
         })
       );
     } else {

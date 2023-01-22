@@ -1,4 +1,4 @@
-@import 'settings/settings.scss';
+@import "settings/settings.scss";
 
 * {
   box-sizing: border-box;
@@ -19,8 +19,6 @@
 // Base root element
 html {
   font-size: 16px;
-  color: $dark-blue;
-  background-color: $background-first;
 }
 
 // Bare HTML elements
@@ -47,7 +45,6 @@ a {
   text-decoration: none;
   outline: none;
   transition: color 0.3s ease-in-out;
-  color: $blue;
   cursor: pointer;
 
   &:active,

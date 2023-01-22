@@ -5,6 +5,7 @@ import { AuthApiService } from '../apis/auth-api.service';
 import { AuthService } from '../services/auth.service';
 
 import * as CoreActions from '../../../core/+state/core.actions';
+import { AuthResultDTO } from '../dto/user-auth-result.dto';
 import * as AuthActions from './auth.actions';
 
 @Injectable()
@@ -20,7 +21,7 @@ export class AuthEffects {
       ofType(AuthActions.login),
       switchMap(({ model }) => {
         return this.authApi.login(model).pipe(
-          map((result: any) => {
+          map((result: AuthResultDTO) => {
             this.authService.storeUserTokens(result);
             return CoreActions.loginSuccess({ result });
           }),

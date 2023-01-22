@@ -31,10 +31,6 @@ export class InitializationService {
     await this.getUserWithAccessToken();
   }
 
-  async refreshTokens(): Promise<void> {
-    await this.authAPI.refreshSync();
-  }
-
   async getUserWithAccessToken(): Promise<void> {
     const userInfo = await this.authAPI.meSync().catch((error) => {
       throw error;
