@@ -6,10 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { SnackbarService } from 'src/app/modules/core/services/snackbar.service';
+import { filter, Observable } from 'rxjs';
+import { CoreFacade, StorageService } from 'src/app/modules/core';
 import { NumberUtility } from 'src/app/shared/utilities';
 import { SubSink } from 'subsink';
+import { LoginDTO } from '../../data-access/dto/auth.dto';
+import { AuthService } from '../../data-access/services/auth.service';
 
 @Component({
   selector: 'koodaki-otp',
@@ -20,10 +22,11 @@ export class OtpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private snackbar: SnackbarService
+    private authService: AuthService,
+    private storage: StorageService,
+    private coreFacade: CoreFacade
   ) {}
 
-  otpCodeLenght: number = 4;
   form: FormGroup = this.fb.group({
     code: [
       null,
@@ -36,7 +39,7 @@ export class OtpComponent implements OnInit {
   inProgress = false;
   ngOnInit(): void {
     this.startCountDownTimer();
-
+    this.listenStore();
     this.time.subscribe((number: number) => {
       if (number === 0) {
         this.form.controls['code'].reset();
@@ -48,26 +51,35 @@ export class OtpComponent implements OnInit {
     this.time = NumberUtility.countDown(40);
   }
 
-  otpCode?: number;
+  listenStore() {
+    this.coreFacade.user$.pipe(filter((u) => !!u)).subscribe((user) => {
+      this.router.navigate(['panel/projects/list']);
+    });
+  }
 
   login(): void {
     this.inProgress = true;
-    if (this.otpCodeIsValid()) {
-      this.router.navigate(['/']);
-    } else {
-      this.snackbar.fail('کد وارد شده صحیح نیست');
-    }
+    const model: LoginDTO = {
+      username: this.standardizePhoneNumber(this.storage.phoneNumber as string),
+      password: this.form.controls['code'].value,
+    };
+
+    this.authService.login(model);
   }
 
-  callOtpAgain() {}
-
-  otpCodeIsValid(): boolean {
-    return +this.form.controls['code'].value === this.otpCode;
+  private standardizePhoneNumber(phoneNumber: string): string {
+    let newPhoneNumber = phoneNumber;
+    if (phoneNumber && phoneNumber[0] === '0') {
+      newPhoneNumber = phoneNumber.replace('0', '+98');
+    }
+    return newPhoneNumber;
   }
 
   get codeFormControl(): FormControl {
     return this.form.controls['code'] as FormControl;
   }
+
+  callOtpAgain() {}
 
   ngOnDestroy(): void {
     this.subsink.unsubscribe();

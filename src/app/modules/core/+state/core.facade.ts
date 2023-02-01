@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { GetUserDTO } from '../../auth/data-access/dto/get-user.dto';
 
 import * as CoreActions from './core.actions';
 import * as CoreFeature from './core.reducer';
@@ -21,7 +22,7 @@ export class CoreFacade {
     this.store.dispatch(CoreActions.Initialized());
   }
 
-  setUser(user: any) {
+  setUser(user: GetUserDTO) {
     this.store.dispatch(CoreActions.setUser({ user }));
   }
 

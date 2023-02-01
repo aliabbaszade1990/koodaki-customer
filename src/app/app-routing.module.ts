@@ -6,7 +6,7 @@ import { DashboardLayoutComponent } from './modules/ui-dashboard-layout/dashboar
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'panel/projects/list',
+    redirectTo: 'panel',
     pathMatch: 'full',
   },
   {

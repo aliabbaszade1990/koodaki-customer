@@ -1,12 +1,13 @@
-@import 'settings/settings.scss';
+@import "settings/settings.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.header {
-  $self: &;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: $navbar-height;
-  padding: 0 $gap-sm;
+@layer components {
+  .header {
+    height: $navbar-height;
+    @apply bg-white  border-b py-0 px-3 z-10 sticky top-0;
+  }
 }
 
 @media screen and (min-width: 60em) {

@@ -1,42 +1,28 @@
-@import 'settings/settings.scss';
+@import "settings/settings.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.main-layout {
-  height: 100vh;
-  overflow-y: auto;
-  background: $background-forth;
-
-  mat-toolbar {
-    height: $navbar-height;
-  }
-}
-
-.mat-drawer-side {
-  border-left: $border;
-  width: $sidenav-width;
-}
-
-button[mat-menu-item] {
-  // background-color: $background-second;
-  background-color: transparent;
-  height: $navbar-height;
-  position: relative;
-  &.menu-item--active {
-    // &::before {
-    //   content: '';
-    //   position: absolute;
-    //   top: 0;
-    //   left: 0;
-    //   display: block;
-    //   width: 100%;
-    //   height: 2px;
-    //   background-color: $yellow;
-    // }
-    // border-top: 2px solid $yellow;
-    .mat-icon {
-      color: $yellow;
+@layer components {
+  .main-layout {
+    mat-toolbar {
+      height: $navbar-height;
     }
-    > span {
-      font-weight: bold;
+  }
+
+  .mat-drawer-side {
+    @apply border-l;
+    width: $sidenav-width;
+  }
+
+  button[mat-menu-item] {
+    &.menu-item--active {
+      .mat-icon {
+        @apply text-yellow-500;
+      }
+      .menu-item_title {
+        @apply font-bold;
+      }
     }
   }
 }

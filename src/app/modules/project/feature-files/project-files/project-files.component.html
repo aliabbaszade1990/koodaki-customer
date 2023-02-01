@@ -1,9 +1,9 @@
 <div class="page-choose-files flex">
   <!-- List -->
-  <div class="list">
-    <div class="list_items pgap relative" #imageList>
+  <div class="list w-[12.5rem]">
+    <div class="list_items p-3 relative overflow-y-auto" #imageList>
       <div
-        class="image-wrapper mbgap relative"
+        class="image-wrapper mb-3 relative"
         *ngFor="let image of images; let i = index"
         [class.is-current]="image.isCurrentItem"
         [class.is-selected]="image.selected"
@@ -11,12 +11,12 @@
       >
         <img
           [src]="'./assets/images/saeidifar/' + image.src"
-          class="image block pointer"
+          class="image block cursor-pointer max-w-full max-h-full w-full rounded-sm"
           (click)="onClickImage(image)"
           alt=""
         />
 
-        <div class="image-wrapper_icons flex flex-gap-12">
+        <div class="image-wrapper_icons flex gap-3">
           <mat-icon
             *ngIf="image.comment.length"
             class="image-warpper_icon image-warpper_icon--comment"
@@ -27,42 +27,33 @@
         </div>
       </div>
     </div>
-    <!-- Bottom -->
-    <div
-      class="images_bottom border-top pxgap overflow-hidden flex items-center justify-center"
-    >
-      <div>{{ images.length }} آیتم</div>
-      <div class="left">
-        <button mat-icon-button>
-          <mat-icon fontSet="fas" fontIcon="fa-filter"></mat-icon>
-        </button>
-      </div>
-    </div>
+    <!-- Pagination -->
+    <div class="list_pagination"></div>
   </div>
   <!-- Content -->
-  <div class="content border-right bg-third">
+  <div class="content border-r bg-gray-100">
     <!-- Slider -->
     <div
       #slider
-      class="slider relative pgap overflow-hidden flex flex-column justify-center items-center"
+      class="slider relative p-3 overflow-hidden flex flex-col justify-center items-center"
     >
       <img
         #image
         [src]="'./assets/images/saeidifar/' + currentItem.src"
-        class="block mbgap"
+        class="block mb-3"
         [class.is-selected]="currentItem.selected"
         alt=""
       />
 
       <!-- Navigators -->
       <div
-        class="navigator navigator--left pointer flex flex-column items-center justify-center"
+        class="navigator navigator--left shadow-lg absolute left-0 w-[40px] z-10 bg-white pointer flex flex-col items-center justify-center"
         (click)="onClickNavigationPreviouse()"
       >
         <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
       </div>
       <div
-        class="navigator navigator--right pointer flex flex-column items-center justify-center"
+        class="navigator navigator--right shadow-lg absolute right-0 w-[40px] z-10 bg-white pointer flex flex-col items-center justify-center"
         (click)="onClickNavigationNext()"
       >
         <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
@@ -70,10 +61,10 @@
     </div>
     <!-- Toolbar -->
     <div
-      class="toolbar border-top py4 pxgap bg-forth flex items-center justify-center"
+      class="toolbar border-t py-1 px-3 bg-white flex items-center justify-center"
     >
       <!-- Right -->
-      <div fxFlex class="border-left pxgap left flex flex-gap-16 justify-end">
+      <div fxFlex class="border-l px-3 align-left flex gap-4 justify-end">
         <button
           mat-icon-button
           (click)="toggleSelectedImage()"
@@ -99,7 +90,7 @@
         </button>
       </div>
       <!-- Left -->
-      <div fxFlex class="pxgap flex flex-gap-16">
+      <div fxFlex class="px-3 flex gap-4">
         <button
           mat-icon-button
           (click)="onClickDelete()"

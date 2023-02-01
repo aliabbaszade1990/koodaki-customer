@@ -43,10 +43,9 @@ export class AuthorizedGuard implements CanActivate, CanActivateChild {
 
   private async canView(): Promise<boolean> {
     await firstValueFrom(this.coreFacade.initialized$);
-
     const user = await firstValueFrom(this.coreFacade.user$);
 
-    return true;
-    // return !!user;
+    // return true;
+    return !!user;
   }
 }

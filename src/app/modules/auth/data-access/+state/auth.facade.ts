@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { LoginDTO } from '../dto/login.dto';
+import { LoginDTO } from '../dto/auth.dto';
 
 import * as AuthActions from './auth.actions';
 import * as AuthSelectors from './auth.selectors';

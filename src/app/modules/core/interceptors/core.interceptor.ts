@@ -29,7 +29,7 @@ export class CoreInterceptor implements HttpInterceptor {
           .set('Access-Control-Allow-Origin', '*')
           .set(
             'Authorization',
-            this.storage.token ? `Bearer ${this.storage.token}` : ''
+            this.storage.accessToken ? `Bearer ${this.storage.accessToken}` : ''
           ),
       });
 

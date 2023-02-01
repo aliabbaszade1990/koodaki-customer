@@ -13,10 +13,8 @@ export class InitializationService {
   async initializeApp(): Promise<void> {
     this.coreFacade.init();
 
-    if (this.storage.token && this.storage.refreshToken) {
+    if (this.storage.accessToken) {
       await this.startAppWithAccessToken();
-    } else if (this.storage.refreshToken) {
-      await this.startAppWithRefreshToken();
     }
 
     this.coreFacade.initialized();
@@ -26,15 +24,10 @@ export class InitializationService {
     await this.getUserWithAccessToken();
   }
 
-  async startAppWithRefreshToken(): Promise<void> {
-    await this.authAPI.refreshSync();
-    await this.getUserWithAccessToken();
-  }
-
   async getUserWithAccessToken(): Promise<void> {
-    const userInfo = await this.authAPI.meSync().catch((error) => {
+    const user = await this.authAPI.meSync().catch((error) => {
       throw error;
     });
-    this.coreFacade.setUser(userInfo.admin);
+    this.coreFacade.setUser(user);
   }
 }

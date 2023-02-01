@@ -1,80 +1,78 @@
 @import "settings/settings.scss";
-@import "theme/_variables.theme.scss";
+@tailwind components;
+@tailwind utilities;
 
-//#region Snackbar
+@layer components {
+  //#region Snackbar
 
-.mat-snack-bar-container.ins-snackbar {
-  button {
-    background-color: rgba(#333, 0.2);
-    color: #fff;
+  .mat-snack-bar-container.ins-snackbar {
+    button {
+      background-color: rgba(#333, 0.2);
+      color: #fff;
+    }
+
+    &--fail {
+      @apply bg-red-500;
+    }
+
+    &--info {
+      @apply bg-blue-400 text-black;
+    }
+
+    &--warn {
+      @apply bg-orange-400;
+    }
+
+    &--succeed {
+      @apply bg-green-500 text-black;
+    }
   }
 
-  &--fail {
-    background-color: $red;
-  }
+  //#endregion
 
-  &--info {
-    color: $title-color;
-  }
+  //#region Spinner
 
-  &--warn {
-    background-color: $warn;
-  }
-
-  &--succeed {
-    background-color: $green;
-    color: $title-color;
-  }
-}
-
-//#endregion
-
-//#region Spinner
-
-.koodaki-global-spinner {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: $background-third;
-  background: linear-gradient(
-    to bottom right,
-    $background-third 0%,
-    $background-forth 100%
-  );
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: 0.5s all ease-out;
-  transform: scale(1);
-  opacity: 1;
-
-  &--hide {
-    opacity: 0;
+  .koodaki-global-spinner {
+    @apply bg-gray-300;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom right, gray 0%, white 100%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s all ease-out;
     transform: scale(1);
-    pointer-events: none;
+    opacity: 1;
+
+    &--hide {
+      opacity: 0;
+      transform: scale(1);
+      pointer-events: none;
+    }
+
+    img {
+      height: 60px;
+      object-fit: contain;
+      animation: opening-image 0.5s infinite;
+    }
   }
 
-  img {
-    height: 60px;
-    object-fit: contain;
-    animation: opening-image 0.5s infinite;
+  @keyframes opening-image {
+    0% {
+      transform: scale(1);
+    }
+
+    100% {
+      transform: scale(1.025);
+    }
   }
+
+  //#endregion
 }
-
-@keyframes opening-image {
-  0% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(1.025);
-  }
-}
-
-//#endregion

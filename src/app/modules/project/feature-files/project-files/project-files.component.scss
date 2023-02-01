@@ -1,91 +1,75 @@
 @import "settings/settings.scss";
+@tailwind components;
+@tailwind utilities;
 
-$page-height: calc(100vh - $navbar-height);
-.page-choose-files {
-  height: $page-height;
-  .list {
+@layer components {
+  $page-height: calc(100vh - $navbar-height);
+  .page-choose-files {
     height: $page-height;
-    flex: 0 0 200px;
-    width: 200px;
+    .list {
+      height: $page-height;
+      flex: 0 0 200px;
 
-    &_bottom {
-      height: $navbar-height;
-    }
+      &_bottom {
+        height: $navbar-height;
+      }
 
-    &_items {
-      height: calc($page-height - $navbar-height);
-      overflow-y: auto;
-      scroll-behavior: smooth;
-      -moz-box-shadow: inset 0 10px 10px -10px #ddd,
-        inset 0 -10px 10px -10px #ddd;
-      -webkit-box-shadow: inset 0 10px 10px -10px #ddd,
-        inset 0 -10px 10px -10px #ddd;
-      box-shadow: inset 0 10px 10px -10px #ddd, inset 0 -10px 10px -10px #ddd;
+      &_items {
+        height: calc($page-height - $navbar-height);
+        scroll-behavior: smooth;
+        -moz-box-shadow: inset 0 10px 10px -10px #ddd,
+          inset 0 -10px 10px -10px #ddd;
+        -webkit-box-shadow: inset 0 10px 10px -10px #ddd,
+          inset 0 -10px 10px -10px #ddd;
+        box-shadow: inset 0 10px 10px -10px #ddd, inset 0 -10px 10px -10px #ddd;
 
-      .image-wrapper {
-        > img {
-          max-width: 100%;
-          max-height: 100%;
-          width: 100%;
-          border-radius: 2px;
-        }
-        &.is-current:not(.is-selected) {
-          > img {
-            border: 5px solid $yellow;
+        .image-wrapper {
+          &.is-current:not(.is-selected) {
+            > img {
+              border: 5px solid yellow;
+            }
+          }
+
+          &_icons {
+            position: absolute;
+            bottom: 8px;
+            right: 0;
+            padding: 0 8px;
           }
         }
+      }
+    }
 
-        &_icons {
-          position: absolute;
-          bottom: 8px;
-          right: 0;
-          padding: 0 8px;
+    .content {
+      flex: 0 0 calc(100% - 200px);
+      width: calc(100% - 200px);
+      .toolbar {
+        height: $navbar-height;
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+
+      .slider {
+        height: calc($page-height - ($navbar-height));
+
+        img {
+          display: block;
+          margin: 0 auto;
+          max-width: 100%;
+          max-height: 100%;
+          z-index: 0;
+        }
+
+        $navigator-height: 80px;
+        .navigator {
+          height: $navigator-height;
+          top: calc((100vh - $navbar-height - $navigator-height) / 2);
         }
       }
     }
-  }
 
-  .content {
-    flex: 0 0 calc(100% - 200px);
-    width: calc(100% - 200px);
-    .toolbar {
-      height: $navbar-height;
-      overflow-y: hidden;
-      overflow-x: auto;
+    .is-selected {
+      border: 5px solid green;
     }
-
-    .slider {
-      height: calc($page-height - ($navbar-height));
-
-      img {
-        display: block;
-        margin: 0 auto;
-        max-width: 100%;
-        max-height: 100%;
-        z-index: 0;
-      }
-
-      $navigator-height: 80px;
-      .navigator {
-        position: absolute;
-        width: 40px;
-        height: $navigator-height;
-        top: calc((100vh - $navbar-height - $navigator-height) / 2);
-        z-index: 10;
-        background-color: $background-forth;
-        &--left {
-          left: 0;
-          box-shadow: 10px 0px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        &--right {
-          right: 0;
-          box-shadow: -11px 0px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-      }
-    }
-  }
-
-  .is-selected {
-    border: 5px solid $green;
   }
 }

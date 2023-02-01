@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
+import { GetUserDTO } from '../../auth/data-access/dto/get-user.dto';
+import { RefreshTokenResultDto } from '../../auth/data-access/dto/refresh-token-result-dto';
 
 @Injectable()
 export class CoreAuthApiService {
@@ -8,19 +10,19 @@ export class CoreAuthApiService {
 
   private endpointBase = 'auth';
 
-  me(): Observable<any> {
+  me(): Observable<GetUserDTO> {
     return this.http.get<any>(this.endpointBase + '/me');
   }
 
-  meSync(): Promise<any> {
+  meSync(): Promise<GetUserDTO> {
     return firstValueFrom(this.me());
   }
 
-  refresh(): Observable<any> {
-    return this.http.get<any>(this.endpointBase + '/refresh');
+  refresh(): Observable<RefreshTokenResultDto> {
+    return this.http.post<any>(this.endpointBase + '/refresh', null);
   }
 
-  refreshSync(): Promise<any> {
-    return firstValueFrom(this.me());
+  refreshSync(): Promise<RefreshTokenResultDto> {
+    return firstValueFrom(this.refresh());
   }
 }
