@@ -1,37 +1,23 @@
-<div class="page-choose-files flex">
+<div class="page-choose-files flex flex-row">
   <!-- List -->
-  <div class="list w-[12.5rem]">
+  <div class="list basis-[15rem]">
     <div class="list_items p-3 relative overflow-y-auto" #imageList>
-      <div
-        class="image-wrapper mb-3 relative"
-        *ngFor="let image of images; let i = index"
-        [class.is-current]="image.isCurrentItem"
-        [class.is-selected]="image.selected"
-        [id]="image.id"
-      >
-        <img
-          [src]="'./assets/images/saeidifar/' + image.src"
-          class="image block cursor-pointer max-w-full max-h-full w-full rounded-sm"
-          (click)="onClickImage(image)"
-          alt=""
-        />
-
-        <div class="image-wrapper_icons flex gap-3">
-          <mat-icon
-            *ngIf="image.comment.length"
-            class="image-warpper_icon image-warpper_icon--comment"
-            fontSet="fas"
-            fontIcon="fa-comment"
-            color="accent"
-          ></mat-icon>
-        </div>
-      </div>
+      <koodaki-image-list
+        [list]="images"
+        (clickImage)="onClickImage($event)"
+      ></koodaki-image-list>
     </div>
     <!-- Pagination -->
-    <div class="list_pagination"></div>
+    <div class="list_pagination">
+      <koodaki-paginator
+        [config]="paginatorConfig"
+        (clickNext)="onClickNext($event)"
+        (clickPrevious)="onClickPrevious($event)"
+      ></koodaki-paginator>
+    </div>
   </div>
   <!-- Content -->
-  <div class="content border-r bg-gray-100">
+  <div class="content border-r bg-gray-100 flex-auto">
     <!-- Slider -->
     <div
       #slider
@@ -47,16 +33,16 @@
 
       <!-- Navigators -->
       <div
-        class="navigator navigator--left shadow-lg absolute left-0 w-[40px] z-10 bg-white pointer flex flex-col items-center justify-center"
+        class="navigator navigator--left shadow-lg absolute left-0 w-[40px] z-10 bg-white pointer flex items-center justify-center"
         (click)="onClickNavigationPreviouse()"
       >
-        <mat-icon fontSet="fas" fontIcon="fa-chevron-left"></mat-icon>
+        &#9664;
       </div>
       <div
         class="navigator navigator--right shadow-lg absolute right-0 w-[40px] z-10 bg-white pointer flex flex-col items-center justify-center"
         (click)="onClickNavigationNext()"
       >
-        <mat-icon fontSet="fas" fontIcon="fa-chevron-right"></mat-icon>
+        &#9654;
       </div>
     </div>
     <!-- Toolbar -->

@@ -6,7 +6,7 @@ import { DashboardLayoutComponent } from './modules/ui-dashboard-layout/dashboar
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'panel',
+    redirectTo: 'panel/projects/list',
     pathMatch: 'full',
   },
   {
@@ -26,6 +26,7 @@ const routes: Routes = [
         children: [
           {
             path: 'list',
+            pathMatch: 'full',
             loadChildren: () =>
               import(
                 './modules/project/feature-list/project-feature-list.module'
@@ -33,6 +34,7 @@ const routes: Routes = [
           },
           {
             path: ':id/files',
+            pathMatch: 'full',
             loadChildren: () =>
               import(
                 './modules/project/feature-files/project-feature-files.module'
