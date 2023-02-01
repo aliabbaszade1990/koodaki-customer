@@ -26,7 +26,6 @@ const routes: Routes = [
         children: [
           {
             path: 'list',
-            pathMatch: 'full',
             loadChildren: () =>
               import(
                 './modules/project/feature-list/project-feature-list.module'
@@ -34,7 +33,6 @@ const routes: Routes = [
           },
           {
             path: ':id/files',
-            pathMatch: 'full',
             loadChildren: () =>
               import(
                 './modules/project/feature-files/project-feature-files.module'

@@ -13,6 +13,12 @@
       "name": "serve:dev",
       "request": "launch",
       "type": "node-terminal"
+    },
+    {
+      "command": "npm run build:prod",
+      "name": "build:prod",
+      "request": "launch",
+      "type": "node-terminal"
     }
   ]
 }

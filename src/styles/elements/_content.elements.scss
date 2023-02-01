@@ -1,6 +1,5 @@
 @import "settings/settings.scss";
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
   * {
@@ -22,6 +21,6 @@
 
   // Base root element
   html {
-    @apply text-base bg-gray-100;
+    @apply text-base bg-gray-50;
   }
 }

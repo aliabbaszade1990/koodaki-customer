@@ -1,6 +1,5 @@
 @import "settings/settings.scss";
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
   $page-height: calc(100vh - $navbar-height);
