@@ -5,11 +5,6 @@ import { DashboardLayoutComponent } from './modules/ui-dashboard-layout/dashboar
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'panel/projects/list',
-    pathMatch: 'full',
-  },
-  {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/feature-sign-in/feature-sign-in.module').then(

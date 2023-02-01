@@ -26,7 +26,7 @@ export class CoreFacade {
     this.store.dispatch(CoreActions.setUser({ user }));
   }
 
-  resetUser() {
+  reset() {
     this.store.dispatch(CoreActions.reset());
   }
 }

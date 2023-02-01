@@ -41,10 +41,6 @@ export class SigninComponent implements OnInit {
 
   inProgress = false;
   listenStore() {
-    this.coreFacade.user$.pipe(filter((u) => !!u)).subscribe((result) => {
-      this.router.navigate(['/']);
-    });
-
     this.authFacade.error$.pipe(filter((e) => !!e)).subscribe((result) => {
       this.inProgress = false;
       this.snackbar.fail(result as string);

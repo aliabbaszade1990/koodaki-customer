@@ -11,7 +11,7 @@ export class AuthService {
     private storage: StorageService,
     private router: Router,
     private authApi: AuthApiService,
-    private coreFaced: CoreFacade
+    private coreFacade: CoreFacade
   ) {}
 
   storeUserTokens(result: LoginResultDTO) {
@@ -23,6 +23,12 @@ export class AuthService {
       this.authApi.login(model)
     );
     this.storeUserTokens(loginResult);
-    this.coreFaced.setUser(loginResult.user);
+    this.coreFacade.setUser(loginResult.user);
+  }
+
+  logout(): void {
+    this.storage.clearAll();
+    this.coreFacade.reset();
+    this.router.navigate(['auth/sign-in']);
   }
 }

@@ -45,6 +45,7 @@ const reducer = createReducer(
   on(CoreActions.reset, (state) => ({
     ...state,
     user: null,
+    initialized: false,
   })),
   on(CoreActions.sessionExpired, (state, action) => ({
     ...state,

@@ -12,7 +12,7 @@ export class CoreAuthService {
 
   logout(): void {
     this.storage.clear();
-    this.coreFacade.resetUser();
+    this.coreFacade.reset();
     this.router.navigate(['auth', 'sign-in', { outlets: { builder: null } }]);
   }
 }

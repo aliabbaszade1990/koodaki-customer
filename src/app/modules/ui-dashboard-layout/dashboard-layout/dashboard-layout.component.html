@@ -1,6 +1,6 @@
 <div class="main-layout overflow-y-auto h-screen">
   <koodaki-dashboard-header (hamburgerClick)="toggleSidenav()">
-    <div class="flex-auto" content>
+    <div class="grow flex items-center" content>
       <ng-container *ngFor="let item of menuItems">
         <button
           mat-menu-item
@@ -19,6 +19,20 @@
           <span class="menu-item_title">{{ item.textToken }}</span>
         </button>
       </ng-container>
+      <div class="grow"></div>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onClickLogout()">
+          <mat-icon color="warn">logout</mat-icon>
+          <span>خروج</span>
+        </button>
+      </mat-menu>
     </div>
   </koodaki-dashboard-header>
   <section>

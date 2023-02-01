@@ -19,16 +19,14 @@ export class AuthorizedGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
+    console.log(route);
+
     const canView = await this.canView();
 
     if (!canView) {
-      this.router.navigate(
-        ['auth', 'sign-in', { outlets: { builder: null } }],
-        {
-          queryParams: { redirectedFrom: state.url },
-          replaceUrl: true,
-        }
-      );
+      this.router.navigate(['auth', 'sign-in'], {
+        replaceUrl: true,
+      });
     }
 
     return canView;
@@ -45,7 +43,6 @@ export class AuthorizedGuard implements CanActivate, CanActivateChild {
     await firstValueFrom(this.coreFacade.initialized$);
     const user = await firstValueFrom(this.coreFacade.user$);
 
-    // return true;
     return !!user;
   }
 }
