@@ -54,12 +54,17 @@ export class SigninComponent implements OnInit {
         this.form.controls['username'].value as string
       ),
     };
-    this.authApi.otp(model).subscribe((result) => {
-      this.inProgress = false;
-      if (result.user) {
-        this.storage.savePhoneNumber(this.form.controls['username'].value);
-        this.router.navigate(['auth/otp']);
-      }
+    this.authApi.otp(model).subscribe({
+      next: (result) => {
+        this.inProgress = false;
+        if (result.user) {
+          this.storage.savePhoneNumber(this.form.controls['username'].value);
+          this.router.navigate(['auth/otp']);
+        }
+      },
+      error: (error) => {
+        this.inProgress = false;
+      },
     });
   }
 

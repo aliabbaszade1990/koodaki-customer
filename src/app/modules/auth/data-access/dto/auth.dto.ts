@@ -1,7 +1,7 @@
 import { GetUserDTO } from './get-user.dto';
 import { RefreshTokenResultDto } from './refresh-token-result-dto';
 
-export interface LoginResultDTO extends RefreshTokenResultDto {
+export interface UserWithTokenResponse extends RefreshTokenResultDto {
   user: GetUserDTO;
 }
 
@@ -12,10 +12,6 @@ export interface LoginDTO {
 
 export interface RequestOtpDto {
   username: string;
-}
-
-export interface OtpResultDto {
-  user: GetUserDTO;
 }
 
 export interface OtpResultDto {

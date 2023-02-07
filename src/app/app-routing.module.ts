@@ -5,6 +5,11 @@ import { DashboardLayoutComponent } from './modules/ui-dashboard-layout/dashboar
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'panel/project/list',
+    pathMatch: 'full',
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/feature-sign-in/feature-sign-in.module').then(
@@ -17,7 +22,7 @@ const routes: Routes = [
     canActivate: [AuthorizedGuard],
     children: [
       {
-        path: 'projects',
+        path: 'project',
         children: [
           {
             path: 'list',

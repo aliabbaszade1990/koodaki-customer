@@ -30,7 +30,7 @@
       <button
         mat-flat-button
         color="primary"
-        [disabled]="form.invalid && inProgress"
+        [disabled]="form.invalid || inProgress"
         class="block w-full"
         type="submit"
         (click)="continue()"

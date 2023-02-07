@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoreFacade } from '../+state/core.facade';
+import { UserWithTokenResponse } from '../../auth/data-access/dto/auth.dto';
 import { CoreAuthApiService } from '../apis/core-auth.api.service';
 import { StorageService } from './storage.service';
 @Injectable()
@@ -25,9 +26,11 @@ export class InitializationService {
   }
 
   async getUserWithAccessToken(): Promise<void> {
-    const user = await this.authAPI.meSync().catch((error) => {
-      throw error;
-    });
-    this.coreFacade.setUser(user);
+    const result: UserWithTokenResponse = await this.authAPI
+      .meSync()
+      .catch((error) => {
+        throw error;
+      });
+    this.coreFacade.setUser(result.user);
   }
 }

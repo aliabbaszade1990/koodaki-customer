@@ -53,7 +53,7 @@ export class OtpComponent implements OnInit {
 
   listenStore() {
     this.coreFacade.user$.pipe(filter((u) => !!u)).subscribe((user) => {
-      this.router.navigate(['panel/projects/list']);
+      this.router.navigate(['panel/project/list']);
     });
   }
 
