@@ -13,7 +13,7 @@ export class StorageService {
     this.store.addPlugin(plugins);
   }
 
-  get token(): string | null {
+  get accessToken(): string | null {
     try {
       const expiresAt = this.store.getExpiration(STORAGE_ITEMS.accessToken);
       const expired = expiresAt && dayjs().isAfter(expiresAt);
@@ -43,17 +43,29 @@ export class StorageService {
     }
   }
 
-  setToken(token: string): void {
-    const expiration = dayjs().add(6, 'hour');
+  get phoneNumber(): string | null {
+    return this.store.get(STORAGE_ITEMS.phoneNumber);
+  }
+
+  saveAccessToken(token: string): void {
+    const expiration = dayjs().add(30, 'day');
     this.store.set(STORAGE_ITEMS.accessToken, token, expiration);
   }
 
-  setRefreshToken(token: string): void {
+  saveRefreshToken(token: string): void {
     const expiration = dayjs().add(1, 'month');
     this.store.set(STORAGE_ITEMS.refreshToken, token, expiration);
   }
 
-  clear(): void {
+  savePhoneNumber(token: string): void {
+    this.store.set(STORAGE_ITEMS.phoneNumber, token);
+  }
+
+  clearPhoneNumber(): void {
+    this.store.clear(STORAGE_ITEMS.phoneNumber);
+  }
+
+  clearAll(): void {
     this.store.clearAll();
   }
 }

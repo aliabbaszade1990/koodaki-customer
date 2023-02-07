@@ -1,11 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { GetUserDTO } from '../../auth/data-access/dto/get-user.dto';
 
 import * as CoreActions from './core.actions';
 
 export const CORE_FEATURE_KEY = 'core';
 
 export interface CoreState {
-  user: any | null;
+  user: GetUserDTO | undefined;
   initialized: boolean;
   sessionExpired: boolean;
 }
@@ -15,7 +16,7 @@ export interface CorePartialState {
 }
 
 export const initialCoreState: CoreState = {
-  user: null,
+  user: undefined,
   initialized: false,
   sessionExpired: false,
 };
@@ -24,12 +25,12 @@ const reducer = createReducer(
   initialCoreState,
   on(CoreActions.initCore, (state) => ({
     ...state,
-    user: null,
+    user: undefined,
     initialized: false,
   })),
   on(CoreActions.loginSuccess, (state, { result }) => ({
     ...state,
-    user: result.admin,
+    user: result.user,
   })),
   on(CoreActions.Initialized, (state) => ({
     ...state,
@@ -44,7 +45,8 @@ const reducer = createReducer(
   }),
   on(CoreActions.reset, (state) => ({
     ...state,
-    user: null,
+    user: undefined,
+    initialized: false,
   })),
   on(CoreActions.sessionExpired, (state, action) => ({
     ...state,

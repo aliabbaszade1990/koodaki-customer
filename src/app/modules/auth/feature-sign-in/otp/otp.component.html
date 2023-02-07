@@ -1,7 +1,9 @@
-<div class="page-otp flex flex-column items-center justify-center">
-  <div class="bg-forth br-md box-shadow p40 container--xs">
+<div
+  class="page-otp flex flex-col items-center justify-center overflow-y-auto bg-gray-100"
+>
+  <div class="bg-forth rounded-md shadow-md p-10 container--xs bg-white">
     <h5>تایید</h5>
-    <p class="fs-sm">رمز یک‌بار مصرف به شماره ---------- پیامک شد.</p>
+    <p class="fs-sm">کدی ارسال شده به شماره همراه خود رو وارد کنید.</p>
     <br />
     <form [formGroup]="form" class="contrary">
       <mat-form-field appearance="outline">
@@ -32,7 +34,7 @@
               mat-flat-button
               [disabled]="inProgress"
               (click)="callOtpAgain()"
-              class="width-100"
+              class="w-full"
             >
               ارسال مجدد کد
             </button>

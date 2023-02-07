@@ -1,30 +1,28 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
-import { Environment } from 'src/app/shared/interfaces';
+import { UserWithTokenResponse } from '../../auth/data-access/dto/auth.dto';
+import { RefreshTokenResultDto } from '../../auth/data-access/dto/refresh-token-result-dto';
 
 @Injectable()
 export class CoreAuthApiService {
-  constructor(
-    private http: HttpClient,
-    @Inject('environment') private environment: Environment
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private endpointBase = 'auth';
 
-  me(): Observable<any> {
+  me(): Observable<UserWithTokenResponse> {
     return this.http.get<any>(this.endpointBase + '/me');
   }
 
-  meSync(): Promise<any> {
+  meSync(): Promise<UserWithTokenResponse> {
     return firstValueFrom(this.me());
   }
 
-  refresh(): Observable<any> {
-    return this.http.get<any>(this.endpointBase + '/refresh');
+  refresh(): Observable<RefreshTokenResultDto> {
+    return this.http.post<any>(this.endpointBase + '/refresh', null);
   }
 
-  refreshSync(): Promise<any> {
-    return firstValueFrom(this.me());
+  refreshSync(): Promise<RefreshTokenResultDto> {
+    return firstValueFrom(this.refresh());
   }
 }

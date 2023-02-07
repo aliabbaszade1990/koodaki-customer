@@ -1,8 +1,7 @@
 export interface GetUserDTO {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   createdAt: string;
-  updatedAt: string;
-  email: string;
-  password: string;
+  phoneNumber: string;
 }

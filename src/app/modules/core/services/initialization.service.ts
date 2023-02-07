@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoreFacade } from '../+state/core.facade';
+import { UserWithTokenResponse } from '../../auth/data-access/dto/auth.dto';
 import { CoreAuthApiService } from '../apis/core-auth.api.service';
 import { StorageService } from './storage.service';
 @Injectable()
@@ -13,10 +14,8 @@ export class InitializationService {
   async initializeApp(): Promise<void> {
     this.coreFacade.init();
 
-    if (this.storage.token && this.storage.refreshToken) {
+    if (this.storage.accessToken) {
       await this.startAppWithAccessToken();
-    } else if (this.storage.refreshToken) {
-      await this.startAppWithRefreshToken();
     }
 
     this.coreFacade.initialized();
@@ -26,19 +25,12 @@ export class InitializationService {
     await this.getUserWithAccessToken();
   }
 
-  async startAppWithRefreshToken(): Promise<void> {
-    await this.authAPI.refreshSync();
-    await this.getUserWithAccessToken();
-  }
-
-  async refreshTokens(): Promise<void> {
-    await this.authAPI.refreshSync();
-  }
-
   async getUserWithAccessToken(): Promise<void> {
-    const userInfo = await this.authAPI.meSync().catch((error) => {
-      throw error;
-    });
-    this.coreFacade.setUser(userInfo.admin);
+    const result: UserWithTokenResponse = await this.authAPI
+      .meSync()
+      .catch((error) => {
+        throw error;
+      });
+    this.coreFacade.setUser(result.user);
   }
 }
