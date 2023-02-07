@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AutherizedGuard } from './modules/core/guards/autherized.guard';
+import { AuthorizedGuard } from './modules/core/guards/authorized.guard';
 import { DashboardLayoutComponent } from './modules/ui-dashboard-layout/dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'panel/projects/list',
+    redirectTo: 'panel/project/list',
     pathMatch: 'full',
   },
   {
@@ -19,10 +19,10 @@ const routes: Routes = [
   {
     path: 'panel',
     component: DashboardLayoutComponent,
-    canActivate: [AutherizedGuard],
+    canActivate: [AuthorizedGuard],
     children: [
       {
-        path: 'projects',
+        path: 'project',
         children: [
           {
             path: 'list',

@@ -1,9 +1,13 @@
-// import { MenuItem } from '@koodaki/shared/interfaces';
-
-export const HORN_MENU_ITEMS: any[] = [
+export const HORN_MENU_ITEMS: MenuItem[] = [
   {
-    textToken: 'پروژه های من',
-    link: 'panel/projects/list',
-    icon: 'fa-film',
+    text: 'پروژه های من',
+    link: 'panel/project/list',
+    icon: 'photo-library',
   },
 ];
+
+export interface MenuItem {
+  text: string;
+  link: string;
+  icon: string;
+}

@@ -1,5 +1,4 @@
 @use "@angular/material" as mat;
-@include mat.core();
 
 $material-primary-color: (
   50: #faefeb,
@@ -117,11 +116,13 @@ $koodaki-theme: mat.define-light-theme(
     density: 0,
   )
 );
-$form-field-theme: mat.define-light-theme(
+$more-dense: mat.define-light-theme(
   (
     density: -2,
   )
 );
 
 @include mat.all-component-themes($koodaki-theme);
-@include mat.form-field-theme($form-field-theme);
+@include mat.form-field-theme($more-dense);
+@include mat.icon-theme($more-dense);
+@include mat.icon-button-theme($more-dense);

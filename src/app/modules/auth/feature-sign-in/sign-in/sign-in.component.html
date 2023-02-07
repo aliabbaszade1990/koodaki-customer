@@ -1,5 +1,7 @@
-<div class="page-sign-in flex flex-column items-center justify-center">
-  <div class="bg-forth br-md box-shadow p40 container--xs">
+<div
+  class="h-screen flex flex-col items-center justify-center overflow-y-auto bg-gray-100"
+>
+  <div class="bg-forth rounded-md shadow-md p-10 container--xs bg-white">
     <img
       src="assets/images/logo-koodaki.png"
       width="120px"
@@ -18,7 +20,7 @@
         <input
           matInput
           placeholder="۰۹۱۲*******"
-          formControlName="phoneNumber"
+          formControlName="username"
           required
           class="left"
           dir="ltr"
@@ -28,8 +30,8 @@
       <button
         mat-flat-button
         color="primary"
-        [disabled]="form.invalid"
-        class="block width-100"
+        [disabled]="form.invalid || inProgress"
+        class="block w-full"
         type="submit"
         (click)="continue()"
       >

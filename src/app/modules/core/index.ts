@@ -9,8 +9,8 @@ export * from './+state/core.selectors';
 export * from './apis/core-auth.api.service';
 export * from './core.module';
 // Guards
-export * from './guards/autherized.guard';
-export * from './guards/unautherized.guard';
+export * from './guards/authorized.guard';
+export * from './guards/unauthorized.guard';
 export * from './interceptors/core.interceptor';
 // Services
 export * from './services/core-auth.service';

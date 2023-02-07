@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent } from 'src/app/modules/shared';
 import { v4 } from 'uuid';
 import { GetFileDto } from '../../data-access/dtos/get-file.dto';
+import { PaginatorConfig } from '../../ui-paginator/interfaces/pagination-config.interface';
 import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.component';
 
 @Component({
@@ -20,6 +21,12 @@ export class ProjectFilesComponent implements OnInit {
   constructor(private dialog: MatDialog, private renderer: Renderer2) {}
   images: GetFileDto[] = [];
   selectedImages: string[] = [];
+  paginatorConfig: PaginatorConfig = {
+    total: 1230,
+    page: 1,
+    size: 20,
+    hasNext: true,
+  };
   ngOnInit(): void {
     for (let index = 4342; index < 4783; index++) {
       this.images.push({
@@ -114,8 +121,7 @@ export class ProjectFilesComponent implements OnInit {
   @ViewChild('image') image: ElementRef = new ElementRef(null);
   rotationDegree = 0;
   onClickRotate() {
-    this.rotationDegree =
-      this.rotationDegree === -270 ? 0 : this.rotationDegree - 90;
+    this.rotationDegree = this.rotationDegree - 90;
 
     this.renderer.setStyle(
       this.image.nativeElement,
@@ -134,5 +140,13 @@ export class ProjectFilesComponent implements OnInit {
 
   imageIsVertical(degree: number): boolean {
     return degree === -90 || degree === -270;
+  }
+
+  onClickNext(page: number) {
+    this.paginatorConfig.page = page;
+  }
+
+  onClickPrevious(page: number) {
+    this.paginatorConfig.page = page;
   }
 }

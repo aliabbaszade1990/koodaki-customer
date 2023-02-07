@@ -1,8 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Data, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
-import { SubSink } from 'subsink';
+import { AuthService } from '../../auth/data-access/services/auth.service';
 import { HORN_MENU_ITEMS } from '../constants/menu-items.constants';
 
 @Component({
@@ -13,10 +13,7 @@ import { HORN_MENU_ITEMS } from '../constants/menu-items.constants';
 export class DashboardLayoutComponent implements OnInit {
   constructor(
     private bpo: BreakpointObserver,
-    // private coreFacade: CoreFacade,
-    private subsink: SubSink,
-    // private titleService: TitleService,
-    private cd: ChangeDetectorRef
+    private authService: AuthService
   ) {}
 
   user?: any;
@@ -27,11 +24,6 @@ export class DashboardLayoutComponent implements OnInit {
   opened = false;
   title = '';
 
-  // this.titleService.title$.subscribe((title) => {
-  //   this.title = title;
-  //   this.cd.detectChanges();
-  // });
-  // this.listenStore();
   ngOnInit(): void {}
 
   admin: any = {};
@@ -48,5 +40,9 @@ export class DashboardLayoutComponent implements OnInit {
 
   setRouteTransition(outlet: RouterOutlet): RouterOutlet | Data {
     return outlet && outlet.activatedRouteData;
+  }
+
+  onClickLogout() {
+    this.authService.logout();
   }
 }
