@@ -2,26 +2,25 @@
   <img src="assets/images/babaki/DSC_4750 copy.jpg" class="w-full rounded-md" />
   <div>
     <p class="my-2 inline-block text-white bg-green-500 rounded-lg px-2">
-      فعال
+      {{ project?.isClosed ? "غیر فعال" : "فعال" }}
     </p>
     <p class="mb-2 mt-2">
-      <span class="fw-bold">لوکیشن: </span>
-      <span>باغ گیاهان</span>
+      <span class="fw-bold">موقعیت: </span>
+      <span>{{ project?.location }}</span>
     </p>
     <h5 class="mb-2">
-      ۴۳۲
-      <span class="align-middle">تصویر گرفته شده</span>
+      {{ project?.totalFiles }}
+      <span class="align-middle">فایل</span>
     </h5>
     <h5 class="">
-      ۸
-
+      {{ project?.totalSelectedFile }}
       <span class="text-sm middle">انتخاب شده</span>
     </h5>
     <button
       class="mt-6 w-full"
       mat-flat-button
       color="primary"
-      routerLink="/panel/project/fdfsdfsdf/files"
+      [routerLink]="'/panel/project/' + project?.id + '/files'"
     >
       انتخاب تصاویر منتخب
     </button>

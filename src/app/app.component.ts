@@ -8,6 +8,7 @@ import { InitializationService } from './modules/core';
 })
 export class AppComponent implements OnInit {
   constructor(private initializationService: InitializationService) {}
+
   ngOnInit(): void {
     this.initializationService.initializeApp();
   }
