@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthorizedGuard } from './modules/core/guards/authorized.guard';
 import { DashboardLayoutComponent } from './modules/ui-dashboard-layout/dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
@@ -19,7 +18,6 @@ const routes: Routes = [
   {
     path: 'panel',
     component: DashboardLayoutComponent,
-    canActivate: [AuthorizedGuard],
     children: [
       {
         path: 'project/list',
