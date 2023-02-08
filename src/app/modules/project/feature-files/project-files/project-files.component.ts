@@ -6,8 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { ConfirmationComponent } from 'src/app/modules/shared';
-import { v4 } from 'uuid';
+import { SubSink } from 'subsink';
+import { FileApiService } from '../../data-access/apis/file-api.service';
 import { GetFileDto } from '../../data-access/dtos/get-file.dto';
 import { PaginatorConfig } from '../../ui-paginator/interfaces/pagination-config.interface';
 import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.component';
@@ -18,28 +20,47 @@ import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.compo
   styleUrls: ['./project-files.component.scss'],
 })
 export class ProjectFilesComponent implements OnInit {
-  constructor(private dialog: MatDialog, private renderer: Renderer2) {}
+  constructor(
+    private dialog: MatDialog,
+    private renderer: Renderer2,
+    private route: ActivatedRoute,
+    private subsink: SubSink,
+    private fileApi: FileApiService
+  ) {}
   images: GetFileDto[] = [];
   selectedImages: string[] = [];
   paginatorConfig: PaginatorConfig = {
-    total: 1230,
+    total: 0,
     page: 1,
     size: 20,
     hasNext: true,
   };
-  ngOnInit(): void {
-    for (let index = 4342; index < 4783; index++) {
-      this.images.push({
-        id: v4(),
-        src: `DSC_${index} copy.jpg`,
-        selected: index === 4342 ? true : false,
-        isCurrentItem: false,
-        comment: index === 4342 ? 'test' : '',
-      });
-    }
 
-    this.images[0].isCurrentItem = true;
-    this.currentItem = this.images[0];
+  ngOnInit(): void {
+    this.observeRoute();
+  }
+
+  observeRoute() {
+    this.subsink.sink = this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.getFiles(params['id']);
+      }
+    });
+  }
+
+  getFiles(id: string) {
+    this.fileApi.getFiles(id).subscribe((result) => {
+      this.images = result.items;
+
+      this.paginatorConfig = {
+        ...this.paginatorConfig,
+        total: result.total,
+        hasNext: result.hasNext,
+      };
+
+      this.images[0].isCurrentItem = true;
+      this.currentItem = this.images[0];
+    });
   }
 
   currentItem: GetFileDto = this.images[0];
