@@ -11,6 +11,5 @@ export interface GetProjectDto {
   endedAt: Date;
   customer: GetUserDTO;
   // todo: add
-  totalFiles: number;
   totalSelectedFile: number;
 }

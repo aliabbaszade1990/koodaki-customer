@@ -22,23 +22,18 @@ const routes: Routes = [
     canActivate: [AuthorizedGuard],
     children: [
       {
-        path: 'project',
-        children: [
-          {
-            path: 'list',
-            loadChildren: () =>
-              import(
-                './modules/project/feature-list/project-feature-list.module'
-              ).then((m) => m.ProjectFeatureListModule),
-          },
-          {
-            path: ':id/files',
-            loadChildren: () =>
-              import(
-                './modules/project/feature-files/project-feature-files.module'
-              ).then((m) => m.ProjectFeatureFilesModule),
-          },
-        ],
+        path: 'project/list',
+        loadChildren: () =>
+          import(
+            './modules/project/feature-list/project-feature-list.module'
+          ).then((m) => m.ProjectFeatureListModule),
+      },
+      {
+        path: 'project/:id/files',
+        loadChildren: () =>
+          import(
+            './modules/project/feature-files/project-feature-files.module'
+          ).then((m) => m.ProjectFeatureFilesModule),
       },
     ],
   },
