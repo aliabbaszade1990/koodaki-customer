@@ -25,9 +25,9 @@
     >
       <img
         #image
-        [src]="'./assets/images/saeidifar/' + currentItem.src"
+        [src]="'./assets/images/saeidifar/' + (currentItem && currentItem.url)"
         class="block mb-3"
-        [class.is-selected]="currentItem.selected"
+        [class.is-selected]="currentItem && currentItem.selected"
         alt=""
       />
 
