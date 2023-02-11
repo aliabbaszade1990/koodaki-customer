@@ -11,5 +11,11 @@ export class ImageListComponent {
   @Output() clickImage: EventEmitter<GetFileDto> = new EventEmitter();
   onClickImage(image: GetFileDto) {
     this.clickImage.emit(image);
+    this.getPreviouslySelectedFile().isCurrentItem = false;
+    image.isCurrentItem = true;
+  }
+
+  getPreviouslySelectedFile(): GetFileDto {
+    return this.list.find((item) => item.isCurrentItem) as GetFileDto;
   }
 }

@@ -1,10 +1,30 @@
-<div class="w-[16rem] box p-2 rounded-lg flex flex-col shadow-md bg-white">
-  <img src="assets/images/babaki/DSC_4750 copy.jpg" class="w-full rounded-md" />
+<div
+  class="project-card w-[16rem] box p-2 rounded-lg flex flex-col shadow-md bg-white"
+>
+  <div
+    class="h-[150px] flex flex-col justify-center items-center bg-gray-50 rounded-md overflow-hidden"
+  >
+    <img [src]="project && project.defaultImage" class="w-full" />
+    <mat-icon
+      *ngIf="!(project && project.defaultImage)"
+      class="scale-[3] text-gray-300"
+      >image</mat-icon
+    >
+  </div>
   <div>
-    <p class="my-2 inline-block text-white bg-green-500 rounded-lg px-2">
+    <p
+      class="my-3 inline-block text-white rounded-lg px-2"
+      [ngClass]="{
+        'bg-green-500': !(project && project.isClosed),
+        'bg-gray-300 text-gray-600': project && project.isClosed
+      }"
+    >
       {{ project?.isClosed ? "غیر فعال" : "فعال" }}
     </p>
-    <p class="mb-2 mt-2">
+    <h5 class="mb-2 text-2xl">
+      <span>{{ project?.title }}</span>
+    </h5>
+    <p class="mb-2">
       <span class="fw-bold">موقعیت: </span>
       <span>{{ project?.location }}</span>
     </p>

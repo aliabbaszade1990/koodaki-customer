@@ -5,12 +5,15 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { SnackbarService } from 'src/app/modules/core';
 import { ConfirmationComponent } from 'src/app/modules/shared';
 import { SubSink } from 'subsink';
 import { FileApiService } from '../../data-access/apis/file-api.service';
 import { GetFileDto } from '../../data-access/dtos/get-file.dto';
+import { FileListParams } from '../../data-access/models/list-params-file.model';
 import { PaginatorConfig } from '../../ui-paginator/interfaces/pagination-config.interface';
 import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.component';
 
@@ -25,8 +28,11 @@ export class ProjectFilesComponent implements OnInit {
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private subsink: SubSink,
-    private fileApi: FileApiService
+    private fileApi: FileApiService,
+    private snackbar: SnackbarService
   ) {}
+  choosenOnesControl = new FormControl(false);
+
   images: GetFileDto[] = [];
   selectedImages: string[] = [];
   paginatorConfig: PaginatorConfig = {
@@ -38,28 +44,41 @@ export class ProjectFilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.observeRoute();
+    this.observeCheckbox();
   }
-
+  observeCheckbox() {
+    this.choosenOnesControl.valueChanges.subscribe((value) => {
+      this.fileListParams.selected = value as boolean;
+      this.getFiles();
+    });
+  }
+  projectId: string = '';
   observeRoute() {
     this.subsink.sink = this.route.params.subscribe((params) => {
       if (params['id']) {
-        this.getFiles(params['id']);
+        this.projectId = params['id'];
+        this.fileListParams.projectId = this.projectId;
+        this.getFiles();
       }
     });
   }
 
-  getFiles(id: string) {
-    this.fileApi.getFiles(id).subscribe((result) => {
+  fileListParams: FileListParams = new FileListParams('', false, 20);
+  getFiles() {
+    this.fileApi.getFiles(this.fileListParams).subscribe((result) => {
       this.images = result.items;
 
       this.paginatorConfig = {
         ...this.paginatorConfig,
+        page: this.fileListParams.page,
         total: result.total,
         hasNext: result.hasNext,
       };
 
-      this.images[0].isCurrentItem = true;
-      this.currentItem = this.images[0];
+      if (this.images && this.images.length) {
+        this.images[0].isCurrentItem = true;
+        this.currentItem = this.images[0];
+      }
     });
   }
 
@@ -71,8 +90,21 @@ export class ProjectFilesComponent implements OnInit {
     this.resetRotation();
   }
 
-  toggleSelectedImage() {
+  onClickSelect() {
     this.currentItem.selected = !this.currentItem.selected;
+    this.updateFile();
+  }
+
+  updateFile() {
+    this.fileApi.update(this.currentItem).subscribe({
+      next: (result) => {
+        this.currentItem = result;
+      },
+      error: (error) => {
+        this.currentItem.selected = false;
+        this.snackbar.fail('انتخاب فایل ناموفق بود.');
+      },
+    });
   }
 
   onClickComment() {
@@ -80,10 +112,14 @@ export class ProjectFilesComponent implements OnInit {
       .open(CommentOnFileComponent, {
         direction: 'rtl',
         width: '500px',
+        data: this.currentItem,
       })
       .afterClosed()
       .subscribe((result: any) => {
-        this.currentItem.comment = result.comment || '';
+        if (result) {
+          this.currentItem.comment = result.comment || '';
+          this.updateFile();
+        }
       });
   }
 
@@ -97,7 +133,14 @@ export class ProjectFilesComponent implements OnInit {
         },
       })
       .afterClosed()
-      .subscribe((result) => {});
+      .subscribe((result) => {
+        if (result) {
+          this.fileApi.delete(this.currentItem.id).subscribe((result) => {
+            this.snackbar.succeed('فایل با موفقیت حذف شد');
+            this.getFiles();
+          });
+        }
+      });
   }
 
   onClickNavigationNext() {
@@ -163,11 +206,8 @@ export class ProjectFilesComponent implements OnInit {
     return degree === -90 || degree === -270;
   }
 
-  onClickNext(page: number) {
-    this.paginatorConfig.page = page;
-  }
-
-  onClickPrevious(page: number) {
-    this.paginatorConfig.page = page;
+  onChangePage(page: number) {
+    this.fileListParams.page = page;
+    this.getFiles();
   }
 }

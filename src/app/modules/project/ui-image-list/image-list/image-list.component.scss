@@ -4,10 +4,8 @@
 @layer components {
   $page-height: calc(100vh - $navbar-height);
   .image-wrapper {
-    &.is-current:not(.is-selected) {
-      > img {
-        border: 5px solid yellow;
-      }
+    &.is-current {
+      @apply border-4 border-solid border-yellow-500;
     }
 
     &_icons {
@@ -18,7 +16,7 @@
     }
   }
 
-  .is-selected {
-    border: 5px solid green;
+  .is-selected:not(.is-current) {
+    @apply border-4 border-green-500;
   }
 }

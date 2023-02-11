@@ -9,6 +9,6 @@ import { GetProjectDto } from '../../data-access/dtos/get-project-dto';
 export class ProjectCardComponent implements OnInit {
   constructor() {}
   @Input() project?: GetProjectDto;
-
+  alternativeImage = 'assets/images/d-i-2.png';
   ngOnInit(): void {}
 }

@@ -1,3 +1,3 @@
 export interface CurrentItem {
-  isCurrentItem: boolean;
+  isCurrentItem?: boolean;
 }

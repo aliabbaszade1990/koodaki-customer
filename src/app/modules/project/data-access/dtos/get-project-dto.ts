@@ -10,6 +10,6 @@ export interface GetProjectDto {
   startedAt: Date;
   endedAt: Date;
   customer: GetUserDTO;
-  // todo: add
   totalSelectedFile: number;
+  defaultImage: string;
 }

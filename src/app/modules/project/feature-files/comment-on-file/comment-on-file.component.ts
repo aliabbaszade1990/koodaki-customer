@@ -16,7 +16,7 @@ export class CommentOnFileComponent implements OnInit {
   ) {}
 
   form: FormGroup = this.fb.group({
-    comment: [null, Validators.required],
+    comment: [this.file.comment, Validators.required],
   });
   ngOnInit(): void {}
 
