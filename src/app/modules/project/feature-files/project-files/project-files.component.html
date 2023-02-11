@@ -1,7 +1,7 @@
 <div class="page-choose-files flex flex-row">
   <!-- List -->
   <div class="list basis-[15rem]">
-    <div class="list_items p-3 relative overflow-y-auto" #imageList>
+    <div class="list_items p-6 relative overflow-y-auto" #imageList>
       <koodaki-image-list
         [list]="images"
         (clickImage)="onClickImage($event)"
@@ -11,13 +11,18 @@
     <div class="list_pagination">
       <koodaki-paginator
         [config]="paginatorConfig"
-        (clickNext)="onClickNext($event)"
-        (clickPrevious)="onClickPrevious($event)"
+        (changePage)="onChangePage($event)"
       ></koodaki-paginator>
+    </div>
+    <!-- Filter -->
+    <div class="h-navbar bg-white flex flex-col justify-center">
+      <mat-checkbox color="primary" [formControl]="choosenOnesControl">
+        انتخاب شده ها
+      </mat-checkbox>
     </div>
   </div>
   <!-- Content -->
-  <div class="content border-r bg-gray-100 flex-auto">
+  <div class="content border-r bg-gray-200 flex-auto">
     <!-- Slider -->
     <div
       #slider
@@ -25,9 +30,9 @@
     >
       <img
         #image
-        [src]="'./assets/images/saeidifar/' + currentItem.src"
-        class="block mb-3"
-        [class.is-selected]="currentItem.selected"
+        [src]="currentItem && currentItem.url"
+        class=""
+        [class.is-selected]="currentItem && currentItem.selected"
         alt=""
       />
 
@@ -53,12 +58,12 @@
       <div fxFlex class="border-l px-3 align-left flex gap-4 justify-end">
         <button
           mat-icon-button
-          (click)="toggleSelectedImage()"
+          (click)="onClickSelect()"
           matTooltip="انتخاب کنید"
           color="accent"
         >
           <mat-icon
-            [fontSet]="currentItem.selected ? 'fas' : 'far'"
+            [fontSet]="currentItem && currentItem.selected ? 'fas' : 'far'"
             fontIcon="fa-bookmark"
           ></mat-icon>
         </button>
@@ -66,13 +71,16 @@
           mat-icon-button
           (click)="onClickComment()"
           matTooltip="یادداشت بگذارید"
-          [disabled]="!currentItem.selected"
+          [disabled]="!(currentItem && currentItem.selected)"
         >
           <mat-icon
-            [fontSet]="currentItem.comment.length ? 'fas' : 'far'"
-            [color]="currentItem.comment.length ? 'accent' : ''"
-            fontIcon="fa-comment"
-          ></mat-icon>
+            [color]="
+              currentItem && currentItem.comment && currentItem.comment.length
+                ? 'accent'
+                : ''
+            "
+            >chat</mat-icon
+          >
         </button>
       </div>
       <!-- Left -->

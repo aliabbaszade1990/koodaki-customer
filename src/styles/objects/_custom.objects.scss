@@ -3,26 +3,47 @@
 @layer components {
   //#region Snackbar
 
-  .mat-snack-bar-container.ins-snackbar {
+  .mat-mdc-snack-bar-container.ins-snackbar {
+    .mdc-snackbar__surface {
+      direction: rtl;
+    }
+    .mat-mdc-snack-bar-label {
+      font-family: iranSans;
+    }
     button {
       background-color: rgba(#333, 0.2);
       color: #fff;
     }
 
     &--fail {
-      @apply bg-red-500;
+      .mdc-snackbar__surface {
+        @apply bg-red-500;
+      }
     }
 
     &--info {
-      @apply bg-blue-400 text-black;
+      .mdc-snackbar__surface {
+        @apply bg-blue-400 text-black;
+
+        .mat-mdc-snack-bar-label {
+          @apply text-black;
+        }
+      }
     }
 
     &--warn {
-      @apply bg-orange-400;
+      .mdc-snackbar__surface {
+        @apply bg-orange-400;
+      }
     }
 
     &--succeed {
-      @apply bg-green-500 text-black;
+      .mdc-snackbar__surface {
+        @apply bg-green-500 text-black;
+        .mat-mdc-snack-bar-label {
+          @apply text-black;
+        }
+      }
     }
   }
 
@@ -31,7 +52,7 @@
   //#region Spinner
 
   .koodaki-global-spinner {
-    @apply bg-gray-300;
+    @apply bg-gray-500;
     position: fixed;
     z-index: 100;
     top: 0;
@@ -70,6 +91,19 @@
     100% {
       transform: scale(1.025);
     }
+  }
+
+  //#endregion
+
+  //#region
+  .h-navbar {
+    height: $navbar-height !important;
+  }
+  .h-screen-minus-navbar {
+    height: calc(100vh - #{$navbar-height}) !important;
+  }
+  .w-sidenav {
+    width: $sidenav-width !important;
   }
 
   //#endregion

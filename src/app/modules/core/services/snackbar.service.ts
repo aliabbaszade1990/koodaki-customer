@@ -15,7 +15,7 @@ export class SnackbarService {
   private config: MatSnackBarConfig = {
     panelClass: 'ins-snackbar',
     verticalPosition: 'bottom',
-    horizontalPosition: 'right',
+    horizontalPosition: 'left',
   };
 
   constructor(private snackbar: MatSnackBar) {}
@@ -66,9 +66,5 @@ export class SnackbarService {
     this.config.duration = duration;
 
     return this.snackbar.open(message as string, action as string, this.config);
-  }
-
-  private translateParam(param: string): string {
-    return param;
   }
 }
