@@ -7,12 +7,16 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { filter, Observable } from 'rxjs';
-import { CoreFacade, StorageService } from 'src/app/modules/core';
+import {
+  CoreFacade,
+  SnackbarService,
+  StorageService,
+} from 'src/app/modules/core';
 import { NumberUtility } from 'src/app/shared/utilities';
 import { SubSink } from 'subsink';
+import { AuthApiService } from '../../data-access/apis/auth-api.service';
 import { LoginDTO } from '../../data-access/dto/auth.dto';
 import { AuthService } from '../../data-access/services/auth.service';
-
 @Component({
   selector: 'koodaki-otp',
   templateUrl: './otp.component.html',
@@ -23,8 +27,10 @@ export class OtpComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private authApi: AuthApiService,
     private storage: StorageService,
-    private coreFacade: CoreFacade
+    private coreFacade: CoreFacade,
+    private snackbar: SnackbarService
   ) {}
 
   form: FormGroup = this.fb.group({
@@ -79,7 +85,19 @@ export class OtpComponent implements OnInit {
     return this.form.controls['code'] as FormControl;
   }
 
-  callOtpAgain() {}
+  callOtpAgain() {
+    this.authApi
+      .otp({
+        username: this.standardizePhoneNumber(
+          this.storage.phoneNumber as string
+        ),
+      })
+      .subscribe((result) => {
+        if (result.user) {
+          this.snackbar.succeed('کد یکبار مصرف مجدد ارسال شد.');
+        }
+      });
+  }
 
   ngOnDestroy(): void {
     this.subsink.unsubscribe();

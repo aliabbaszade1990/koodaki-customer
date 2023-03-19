@@ -1,42 +1,48 @@
 <div
-  class="h-screen flex flex-col items-center justify-center overflow-y-auto bg-gray-100"
+  class="h-screen flex overflow-y-auto justify-center items-stretch bg-white p-10"
 >
-  <div class="bg-forth rounded-md shadow-md p-10 container--xs bg-white">
-    <img
-      src="assets/images/logo-koodaki.png"
-      width="120px"
-      class="block mxa"
-      alt=""
-    />
-    <h3 class="primary center sign-in_title">استودیو کودکی</h3>
+  <img
+    src="assets/images/pexels-jonas-mohamadi-1416736.jpg"
+    alt=""
+    class="max-w-full max-h-full"
+  />
+  <div
+    class="flex flex-col justify-center items-center container--xs bg-neutral-100 flex-none w-1/2"
+  >
+    <div class="bg-white rounded-2xl shadow-md p-10">
+      <img
+        src="assets/images/logo-koodaki.png"
+        width="120px"
+        class="block mx-auto"
+        alt=""
+      />
+      <h3 class="text-xl mb-3">استودیو کودکی</h3>
+      <p class="text-sm">لطفا شماره موبایل خودتون رو وارد کنید.</p>
+      <br />
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline">
+          <mat-label>شماره موبایل</mat-label>
+          <input
+            matInput
+            placeholder="۰۹۱۲*******"
+            formControlName="username"
+            required
+            class="left"
+            dir="ltr"
+          />
+        </mat-form-field>
 
-    <h5>ورود به پنل کاربری</h5>
-    <p class="text-sm">سلام!</p>
-    <p class="text-sm">لطفا شماره موبایل خودتون رو وارد کنید.</p>
-    <br />
-    <form [formGroup]="form">
-      <mat-form-field appearance="outline">
-        <mat-label>شماره موبایل</mat-label>
-        <input
-          matInput
-          placeholder="۰۹۱۲*******"
-          formControlName="username"
-          required
-          class="left"
-          dir="ltr"
-        />
-      </mat-form-field>
-
-      <button
-        mat-flat-button
-        color="primary"
-        [disabled]="form.invalid || inProgress"
-        class="block w-full"
-        type="submit"
-        (click)="continue()"
-      >
-        ادامه
-      </button>
-    </form>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="form.invalid || inProgress"
+          class="block w-full"
+          type="submit"
+          (click)="continue()"
+        >
+          ادامه
+        </button>
+      </form>
+    </div>
   </div>
 </div>
