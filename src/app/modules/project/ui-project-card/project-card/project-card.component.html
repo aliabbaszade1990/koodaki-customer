@@ -13,7 +13,7 @@
   </div>
   <div>
     <p
-      class="my-3 inline-block text-white rounded-lg px-2"
+      class="my-3 inline-block text-white rounded-xl px-2 py-1"
       [ngClass]="{
         'bg-green-500': !(project && project.isClosed),
         'bg-gray-300 text-gray-600': project && project.isClosed
@@ -29,8 +29,8 @@
       <span>{{ project?.location }}</span>
     </p>
     <h5 class="">
-      {{ project?.totalSelectedFile }}
-      <span class="text-sm middle">انتخاب شده</span>
+      <span class="text-sm middle"> انتخاب شده ها:</span>
+      {{ project?.selectedImagesCount }}
     </h5>
     <button
       class="mt-6 w-full"

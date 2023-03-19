@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AngularMaterialModule } from '../../shared';
 import { UiImageListModule } from '../ui-image-list/ui-image-list.module';
 import { UiPaginatorModule } from '../ui-paginator/ui-paginator.module';
@@ -19,6 +20,7 @@ import { ProjectFilesComponent } from './project-files/project-files.component';
     ProjectFeatureFilesRoutingModule,
     MatIconModule,
     ReactiveFormsModule,
+    MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,

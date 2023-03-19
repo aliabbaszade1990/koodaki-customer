@@ -26,7 +26,6 @@ import { SnackbarService } from './services/snackbar.service';
       useClass: CoreInterceptor,
       multi: true,
     },
-    InitializationService,
     SubSink,
     CoreFacade,
     CoreAuthApiService,

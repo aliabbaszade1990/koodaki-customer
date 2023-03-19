@@ -8,6 +8,6 @@ export interface GetFileDto extends CurrentItem {
   comment: string;
   url?: string;
   project?: GetProjectDto;
-  createAt: string;
+  createdAt: string;
   projectId: string;
 }
