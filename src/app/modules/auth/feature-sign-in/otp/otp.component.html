@@ -1,46 +1,55 @@
 <div
-  class="page-otp flex flex-col items-center justify-center overflow-y-auto bg-gray-100"
+  class="h-screen flex overflow-y-auto justify-center items-stretch bg-white p-10"
 >
-  <div class="bg-forth rounded-md shadow-md p-10 container--xs bg-white">
-    <h5>تایید</h5>
-    <p class="fs-sm">کدی ارسال شده به شماره همراه خود رو وارد کنید.</p>
-    <br />
-    <form [formGroup]="form" class="contrary">
-      <mat-form-field appearance="outline">
-        <mat-label>کد</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="۱۲۳۴"
-          formControlName="code"
-          class="always-ltr"
-        />
-      </mat-form-field>
-      <div class="flex items-end justify-between gap-16">
-        <button
-          mat-flat-button
-          color="primary"
-          [disabled]="form.invalid || inProgress"
-          (click)="login()"
-        >
-          ورود
-        </button>
-        <div class="right">
-          <div *ngIf="(time | async) !== 0; else sendAgainButton">
-            {{ time | async }} <span class="op6">ثانیه</span>
+  <img
+    src="assets/images/pexels-jonas-mohamadi-1416736.jpg"
+    alt=""
+    class="max-w-full max-h-full"
+  />
+  <div
+    class="flex flex-col justify-center items-center container--xs bg-neutral-100 flex-none w-1/2"
+  >
+    <div class="bg-forth rounded-2xl shadow-md p-10 container--xs bg-white">
+      <h5 class="text-2xl mb-3">تایید</h5>
+      <p class="text-sm">کد ارسال شده به تلفن همراه خودتون رو وارد کنید.</p>
+      <br />
+      <form [formGroup]="form" class="contrary">
+        <mat-form-field appearance="outline">
+          <mat-label>کد</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="۱۲۳۴"
+            formControlName="code"
+            class="always-ltr"
+          />
+        </mat-form-field>
+        <div class="flex items-end justify-between gap-16">
+          <button
+            mat-flat-button
+            color="primary"
+            [disabled]="form.invalid || inProgress"
+            (click)="login()"
+          >
+            ورود
+          </button>
+          <div class="right">
+            <div *ngIf="(time | async) !== 0; else sendAgainButton">
+              {{ time | async }} <span class="op6">ثانیه</span>
+            </div>
+            <ng-template #sendAgainButton>
+              <button
+                mat-flat-button
+                [disabled]="inProgress"
+                (click)="callOtpAgain()"
+                class="w-full"
+              >
+                ارسال مجدد کد
+              </button>
+            </ng-template>
           </div>
-          <ng-template #sendAgainButton>
-            <button
-              mat-flat-button
-              [disabled]="inProgress"
-              (click)="callOtpAgain()"
-              class="w-full"
-            >
-              ارسال مجدد کد
-            </button>
-          </ng-template>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

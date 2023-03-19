@@ -3,6 +3,7 @@ import { filter } from 'rxjs';
 import { GetUserDTO } from 'src/app/modules/auth/data-access/dto/get-user.dto';
 import { CoreFacade } from 'src/app/modules/core';
 import { ProjectApiService } from '../../data-access/apis/project-api.service';
+import { ProjectListParams } from '../../data-access/models/list-params-project.model';
 
 @Component({
   selector: 'koodaki-project-list',
@@ -25,15 +26,16 @@ export class ProjectListComponent implements OnInit {
       .pipe(filter((u) => !!u))
       .subscribe((user: GetUserDTO) => {
         this.user = user;
-
-        this.getProjects(user.id);
+        this.listParams.customerId = user.id;
+        this.getProjects();
       });
   }
 
   projects: any[] = [];
-  getProjects(userId: string) {
-    this.projectApi.getAll(userId).subscribe((result) => {
-      this.projects = result;
+  listParams = new ProjectListParams('');
+  getProjects() {
+    this.projectApi.getAll(this.listParams).subscribe((result) => {
+      this.projects = result.items;
     });
   }
 }

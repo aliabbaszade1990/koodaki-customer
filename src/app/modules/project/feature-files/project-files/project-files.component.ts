@@ -1,14 +1,23 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ActivatedRoute } from '@angular/router';
+import { SnackbarService } from 'src/app/modules/core';
 import { ConfirmationComponent } from 'src/app/modules/shared';
-import { v4 } from 'uuid';
+import { SubSink } from 'subsink';
+import { FileApiService } from '../../data-access/apis/file-api.service';
+import { ProjectApiService } from '../../data-access/apis/project-api.service';
 import { GetFileDto } from '../../data-access/dtos/get-file.dto';
+import { GetProjectDto } from '../../data-access/dtos/get-project-dto';
+import { FileListParams } from '../../data-access/models/list-params-file.model';
 import { PaginatorConfig } from '../../ui-paginator/interfaces/pagination-config.interface';
 import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.component';
 
@@ -18,28 +27,86 @@ import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.compo
   styleUrls: ['./project-files.component.scss'],
 })
 export class ProjectFilesComponent implements OnInit {
-  constructor(private dialog: MatDialog, private renderer: Renderer2) {}
+  constructor(
+    private dialog: MatDialog,
+    private renderer: Renderer2,
+    private route: ActivatedRoute,
+    private subsink: SubSink,
+    private fileApi: FileApiService,
+    private snackbar: SnackbarService,
+    private projectApi: ProjectApiService
+  ) {}
+  choosenOnesControl = new FormControl(false);
+
   images: GetFileDto[] = [];
   selectedImages: string[] = [];
   paginatorConfig: PaginatorConfig = {
-    total: 1230,
+    total: 0,
     page: 1,
     size: 20,
     hasNext: true,
   };
-  ngOnInit(): void {
-    for (let index = 4342; index < 4783; index++) {
-      this.images.push({
-        id: v4(),
-        src: `DSC_${index} copy.jpg`,
-        selected: index === 4342 ? true : false,
-        isCurrentItem: false,
-        comment: index === 4342 ? 'test' : '',
-      });
-    }
 
-    this.images[0].isCurrentItem = true;
-    this.currentItem = this.images[0];
+  @HostListener('window:keydown.ArrowRight', ['$event'])
+  @HostListener('window:keydown.ArrowDown', ['$event'])
+  onArrowRightAndBottom() {
+    this.onClickNavigationNext();
+  }
+
+  @HostListener('window:keydown.ArrowLeft', ['$event'])
+  @HostListener('window:keydown.ArrowUp', ['$event'])
+  onArrowLeftAndUp() {
+    this.onClickNavigationPreviouse();
+  }
+
+  ngOnInit(): void {
+    this.observeRoute();
+    this.observeCheckbox();
+  }
+
+  observeCheckbox() {
+    this.choosenOnesControl.valueChanges.subscribe((value) => {
+      this.fileListParams.selected = value as boolean;
+      this.getFiles();
+    });
+  }
+
+  projectId: string = '';
+  observeRoute() {
+    this.subsink.sink = this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.projectId = params['id'];
+        this.fileListParams.projectId = this.projectId;
+        this.getProject();
+        this.getFiles();
+      }
+    });
+  }
+
+  project?: GetProjectDto;
+  getProject() {
+    this.projectApi.get(this.projectId).subscribe((result) => {
+      this.project = result;
+    });
+  }
+
+  fileListParams: FileListParams = new FileListParams('', false, 20);
+  getFiles() {
+    this.fileApi.getFiles(this.fileListParams).subscribe((result) => {
+      this.images = result.items;
+
+      this.paginatorConfig = {
+        ...this.paginatorConfig,
+        page: this.fileListParams.page,
+        total: result.total,
+        hasNext: result.hasNext,
+      };
+
+      if (this.images && this.images.length) {
+        this.images[0].isCurrentItem = true;
+        this.currentItem = this.images[0];
+      }
+    });
   }
 
   currentItem: GetFileDto = this.images[0];
@@ -50,8 +117,21 @@ export class ProjectFilesComponent implements OnInit {
     this.resetRotation();
   }
 
-  toggleSelectedImage() {
+  onClickSelect() {
     this.currentItem.selected = !this.currentItem.selected;
+    this.updateFile();
+  }
+
+  updateFile() {
+    this.fileApi.update(this.currentItem).subscribe({
+      next: (result) => {
+        this.currentItem = result;
+      },
+      error: (error) => {
+        this.currentItem.selected = false;
+        this.snackbar.fail('انتخاب فایل ناموفق بود.');
+      },
+    });
   }
 
   onClickComment() {
@@ -59,10 +139,14 @@ export class ProjectFilesComponent implements OnInit {
       .open(CommentOnFileComponent, {
         direction: 'rtl',
         width: '500px',
+        data: this.currentItem,
       })
       .afterClosed()
       .subscribe((result: any) => {
-        this.currentItem.comment = result.comment || '';
+        if (result) {
+          this.currentItem.comment = result.comment || '';
+          this.updateFile();
+        }
       });
   }
 
@@ -76,7 +160,14 @@ export class ProjectFilesComponent implements OnInit {
         },
       })
       .afterClosed()
-      .subscribe((result) => {});
+      .subscribe((result) => {
+        if (result) {
+          this.fileApi.delete(this.currentItem.id).subscribe((result) => {
+            this.snackbar.succeed('فایل با موفقیت حذف شد');
+            this.getFiles();
+          });
+        }
+      });
   }
 
   onClickNavigationNext() {
@@ -95,8 +186,11 @@ export class ProjectFilesComponent implements OnInit {
   @ViewChild('imageList') imageList: ElementRef = new ElementRef(null);
   manageScrollingList(index: number, scrollingDown = true) {
     let el = document.getElementById(`${this.images[index]}`);
+    this.scrollTo(index * 185);
+  }
 
-    this.imageList.nativeElement.scrollTop = index * (113 + 12);
+  scrollTo(to: number) {
+    this.imageList.nativeElement.scrollTop = to;
   }
 
   onClickNavigationPreviouse() {
@@ -142,11 +236,21 @@ export class ProjectFilesComponent implements OnInit {
     return degree === -90 || degree === -270;
   }
 
-  onClickNext(page: number) {
-    this.paginatorConfig.page = page;
+  onChangePage(page: number) {
+    this.fileListParams.page = page;
+    this.scrollTo(0);
+    this.getFiles();
   }
 
-  onClickPrevious(page: number) {
-    this.paginatorConfig.page = page;
+  onChangeFinalized(event: MatSlideToggleChange) {
+    (this.project as GetProjectDto).finalized = event.checked;
+    this.projectApi
+      .udpate({ id: this.project?.id as string, finalized: event.checked })
+      .subscribe({
+        next: (result) => {
+          this.project = result;
+        },
+        error: () => {},
+      });
   }
 }
