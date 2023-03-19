@@ -51,16 +51,29 @@
       </div>
     </div>
     <!-- Toolbar -->
-    <div
-      class="toolbar border-t py-1 px-3 bg-white flex items-center justify-center"
-    >
+    <div class="toolbar border-t gap-10 flex items-stretch justify-center">
       <!-- Right -->
-      <div fxFlex class="border-l px-3 align-left flex gap-4 justify-end">
+      <div fxFlex class="w-1/3 flex items-stretch">
+        <div
+          class="bg-white flex items-center px-3"
+          [class.bg-green-500]="project && project.finalized"
+        >
+          <mat-slide-toggle
+            #finalized
+            (change)="onChangeFinalized($event)"
+            [checked]="project && project.finalized"
+            >انتخاب هایم نهاییست</mat-slide-toggle
+          >
+        </div>
+      </div>
+      <!-- Center -->
+      <div class="w-1/3 px-3 flex items-center justify-center bg-white">
         <button
           mat-icon-button
           (click)="onClickSelect()"
           matTooltip="انتخاب کنید"
-          color="accent"
+          color="primary"
+          [disabled]="finalized.checked"
         >
           <mat-icon
             [fontSet]="currentItem && currentItem.selected ? 'fas' : 'far'"
@@ -71,25 +84,28 @@
           mat-icon-button
           (click)="onClickComment()"
           matTooltip="یادداشت بگذارید"
-          [disabled]="!(currentItem && currentItem.selected)"
+          [disabled]="
+            !(currentItem && currentItem.selected) || finalized.checked
+          "
         >
           <mat-icon
             [color]="
-              currentItem && currentItem.comment && currentItem.comment.length
-                ? 'accent'
+              currentItem &&
+              currentItem.comment &&
+              currentItem.comment.length &&
+              !finalized.checked
+                ? 'primary'
                 : ''
             "
             >chat</mat-icon
           >
         </button>
-      </div>
-      <!-- Left -->
-      <div fxFlex class="px-3 flex gap-4">
         <button
           mat-icon-button
           (click)="onClickDelete()"
           matTooltip="حذف کنید"
           color="warn"
+          [disabled]="finalized.checked"
         >
           <mat-icon fontSet="fas" fontIcon="fa-trash-alt"></mat-icon>
         </button>
@@ -102,6 +118,8 @@
           />
         </button>
       </div>
+      <!-- Left -->
+      <div fxFlex class="px-3 flex gap-4 w-1/3"></div>
     </div>
   </div>
 </div>
