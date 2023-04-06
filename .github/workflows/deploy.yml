@@ -1,8 +1,8 @@
 name: Deploy
 on:
-  push: 
+  push:
     branches: [ main ]
-  pull_request: 
+  pull_request:
     branches: [ develop ]
 concurrency:
   group: envirs-${{ github.ref }}
@@ -21,8 +21,9 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           cd /var/www/frontEnd/koodaki-customer
+          npm install
           nvm use 16.18.1
-          pm2 stop "npx ng serve --open --host 103.75.198.71 --port 3008 --disable-host-check" --name "customer"
-          git pull 
-          npm run build
-          pm2 start "npx ng serve --open --host 103.75.198.71 --port 3008 --disable-host-check" --name "customer"
+          pm2 stop "npm run start" --name "customer"
+          git pull
+          npm run build:prod
+          pm2 start "npm run start" --name "customer"
