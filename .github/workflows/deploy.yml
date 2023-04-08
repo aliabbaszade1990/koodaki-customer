@@ -2,8 +2,8 @@ name: Deploy
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ develop ]
+  # pull_request:
+  #   branches: [ develop ]
 concurrency:
   group: envirs-${{ github.ref }}
   cancel-in-progress: true
@@ -27,4 +27,3 @@ jobs:
           git pull
           npm run build:prod
           pm2 start "npm run start" --name "customer" 
-          
