@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start" : "ng serve",
-    "serve": "ng serve --disable-host-check",
-    "serve:dev": "ng serve --configuration=development",
+    "start": "ng serve --disable-host-check",
     "build": "ng build",
     "build:prod": "ng run customer:build:production",
     "watch": "ng build --watch --configuration development",

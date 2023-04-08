@@ -80,11 +80,6 @@
             "browserTarget": "customer:build",
             "disableHostCheck": true,
             "port": 3008
-          },
-          "configurations": {
-            "development": {
-              "browserTarget": "customer:build:development"
-            }
           }
         },
         "extract-i18n": {
