@@ -27,3 +27,4 @@ jobs:
           git pull
           npm run build:prod
           pm2 start "npm run start" --name "customer" 
+
