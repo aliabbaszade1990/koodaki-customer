@@ -25,5 +25,4 @@ jobs:
           nvm use 16.18.1
           pm2 stop "npm run build:prod" --name "customer"
           git pull
-          
           pm2 start "npm run build:prod" --name "customer"
