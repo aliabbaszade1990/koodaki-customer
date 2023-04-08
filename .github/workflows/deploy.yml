@@ -23,6 +23,6 @@ jobs:
           cd /var/www/frontEnd/koodaki-customer
           npm install
           nvm use 16.18.1
-          pm2 stop "npm run build:prod" --name "customer"
+          pm2 stop npm --name customer -- run build:prod
           git pull
-          pm2 start "npm run build:prod" --name "customer"
+          pm2 start npm --name customer -- run build:prod
