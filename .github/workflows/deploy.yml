@@ -26,3 +26,4 @@ jobs:
           pm2 stop npm --name customer -- run build:prod
           git pull
           pm2 start npm --name customer -- run build:prod
+
