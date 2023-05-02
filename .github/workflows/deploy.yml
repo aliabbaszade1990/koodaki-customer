@@ -1,9 +1,7 @@
 name: Deploy
 on:
-  push:
+  push: 
     branches: [ main ]
-  # pull_request:
-  #   branches: [ develop ]
 concurrency:
   group: envirs-${{ github.ref }}
   cancel-in-progress: true
@@ -20,9 +18,8 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd /var/www/frontEnd/koodaki-customer
+          cd  /home/koodaki/koodaki-customer          
+          eval "$(ssh-agent -s)" ssh-add /home/koodaki/keys/customer.key
+          git pull 
           npm install
-          nvm use 16.18.1
-          git pull
-          npm run build:prod
-
+          ng build --configuration=production  
