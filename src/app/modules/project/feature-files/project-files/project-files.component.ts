@@ -17,6 +17,7 @@ import { FileApiService } from '../../data-access/apis/file-api.service';
 import { ProjectApiService } from '../../data-access/apis/project-api.service';
 import { GetFileDto } from '../../data-access/dtos/get-file.dto';
 import { GetProjectDto } from '../../data-access/dtos/get-project-dto';
+import { UpdateProjectDto } from '../../data-access/dtos/update-project-dto';
 import { FileListParams } from '../../data-access/models/list-params-file.model';
 import { PaginatorConfig } from '../../ui-paginator/interfaces/pagination-config.interface';
 import { CommentOnFileComponent } from '../comment-on-file/comment-on-file.component';
@@ -244,13 +245,20 @@ export class ProjectFilesComponent implements OnInit {
 
   onChangeFinalized(event: MatSlideToggleChange) {
     (this.project as GetProjectDto).finalized = event.checked;
-    this.projectApi
-      .udpate({ id: this.project?.id as string, finalized: event.checked })
-      .subscribe({
-        next: (result) => {
-          this.project = result;
-        },
-        error: () => {},
-      });
+    const model: UpdateProjectDto = {
+      id: this.project?.id as string,
+      title: this.project?.title as string,
+      isClosed: this.project?.isClosed as boolean,
+      location: this.project?.location as string,
+      customerId: this.project?.customer.id as string,
+      startedAt: this.project?.startedAt as Date,
+      finalized: event.checked,
+    };
+    this.projectApi.udpate(model).subscribe({
+      next: (result) => {
+        this.project = result;
+      },
+      error: () => {},
+    });
   }
 }

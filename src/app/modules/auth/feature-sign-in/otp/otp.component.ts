@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { filter, Observable } from 'rxjs';
+import { Observable, filter } from 'rxjs';
 import {
   CoreFacade,
   SnackbarService,
@@ -54,7 +54,7 @@ export class OtpComponent implements OnInit {
   }
 
   startCountDownTimer(): void {
-    this.time = NumberUtility.countDown(40);
+    this.time = NumberUtility.countDown(180);
   }
 
   listenStore() {
@@ -86,6 +86,7 @@ export class OtpComponent implements OnInit {
   }
 
   callOtpAgain() {
+    this.startCountDownTimer();
     this.authApi
       .otp({
         username: this.standardizePhoneNumber(
