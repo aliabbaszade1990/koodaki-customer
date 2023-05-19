@@ -58,7 +58,7 @@
                 }
               ]
             },
-            "development": {
+            "local_development": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -68,7 +68,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev.ts"
+                  "with": "src/environments/environment.local-dev.ts"
                 }
               ]
             }
@@ -80,6 +80,11 @@
             "browserTarget": "customer:build",
             "disableHostCheck": true,
             "port": 3008
+          },
+          "configurations": {
+            "local_development": {
+              "browserTarget": "customer:build:local_development"
+            }
           }
         },
         "extract-i18n": {

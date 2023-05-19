@@ -9,8 +9,8 @@
       "type": "node-terminal"
     },
     {
-      "command": "npm run serve:dev",
-      "name": "serve:dev",
+      "command": "npm run start:local:dev",
+      "name": "serve:local:dev",
       "request": "launch",
       "type": "node-terminal"
     },
