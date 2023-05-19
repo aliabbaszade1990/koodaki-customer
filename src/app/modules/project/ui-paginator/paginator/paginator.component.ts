@@ -13,7 +13,9 @@ export class PaginatorComponent {
   @Output() changePage: EventEmitter<number> = new EventEmitter();
 
   get totalPages() {
-    return this.config ? Math.floor(this.config.total / this.config.size) : 0;
+    return this.config
+      ? Math.floor(this.config.total / this.config.size) + 1
+      : 0;
   }
 
   onClickNext() {
