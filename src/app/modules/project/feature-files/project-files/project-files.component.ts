@@ -258,7 +258,9 @@ export class ProjectFilesComponent implements OnInit {
       next: (result) => {
         this.project = result;
       },
-      error: () => {},
+      error: () => {
+        (this.project as GetProjectDto).finalized = !event.checked;
+      },
     });
   }
 }

@@ -6,11 +6,11 @@ export interface GetProjectDto {
   isClosed: boolean;
   location: string;
   filesAt: string;
-  createdAt: Date;
   startedAt: Date;
   endedAt: Date;
-  customer: GetUserDTO;
+  totalFiles: number;
   selectedImagesCount: number;
   defaultImage: string;
   finalized: boolean;
+  customer: GetUserDTO;
 }

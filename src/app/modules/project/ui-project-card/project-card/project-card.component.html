@@ -4,7 +4,7 @@
   <div
     class="h-[150px] flex flex-col justify-center items-center bg-gray-50 rounded-md overflow-hidden"
   >
-    <img [src]="project && project.defaultImage" class="w-full" />
+    <img [src]="project && project.defaultImage" class="w-full" alt="" />
     <mat-icon
       *ngIf="!(project && project.defaultImage)"
       class="scale-[3] text-gray-300"
@@ -29,6 +29,10 @@
       <span>{{ project?.location }}</span>
     </p>
     <h5 class="">
+      <span class="text-sm middle"> تعداد فایل ها:</span>
+      {{ project?.totalFiles }}
+    </h5>
+    <h5 class="">
       <span class="text-sm middle"> انتخاب شده ها:</span>
       {{ project?.selectedImagesCount }}
     </h5>
@@ -37,6 +41,7 @@
       mat-flat-button
       color="primary"
       [routerLink]="'/panel/project/' + project?.id + '/files'"
+      [disabled]="project?.isClosed"
     >
       انتخاب تصاویر منتخب
     </button>
