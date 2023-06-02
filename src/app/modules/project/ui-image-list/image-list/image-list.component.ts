@@ -8,6 +8,7 @@ import { GetFileDto } from '../../data-access/dtos/get-file.dto';
 })
 export class ImageListComponent {
   @Input() list: GetFileDto[] = [];
+  @Input() inProgress = false;
   @Output() clickImage: EventEmitter<GetFileDto> = new EventEmitter();
 
   onClickImage(image: GetFileDto) {

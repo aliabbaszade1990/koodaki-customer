@@ -92,21 +92,29 @@ export class ProjectFilesComponent implements OnInit {
   }
 
   fileListParams: FileListParams = new FileListParams('', false, 20);
+  inProgress = false;
   getFiles() {
-    this.fileApi.getFiles(this.fileListParams).subscribe((result) => {
-      this.images = result.items;
+    this.inProgress = true;
+    this.fileApi.getFiles(this.fileListParams).subscribe({
+      next: (result) => {
+        this.inProgress = false;
+        this.images = result.items;
 
-      this.paginatorConfig = {
-        ...this.paginatorConfig,
-        page: this.fileListParams.page,
-        total: result.total,
-        hasNext: result.hasNext,
-      };
+        this.paginatorConfig = {
+          ...this.paginatorConfig,
+          page: this.fileListParams.page,
+          total: result.total,
+          hasNext: result.hasNext,
+        };
 
-      if (this.images && this.images.length) {
-        this.images[0].isCurrentItem = true;
-        this.currentItem = this.images[0];
-      }
+        if (this.images && this.images.length) {
+          this.images[0].isCurrentItem = true;
+          this.currentItem = this.images[0];
+        }
+      },
+      error: () => {
+        this.inProgress = false;
+      },
     });
   }
 
