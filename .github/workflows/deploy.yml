@@ -20,6 +20,7 @@ jobs:
         script: |
           cd  /home/koodaki/koodaki-customer          
           eval "$(ssh-agent -s)" ssh-add /home/koodaki/keys/customer.key
+          git reset --hard
           git pull 
           npm install
           ng build --configuration=production  
