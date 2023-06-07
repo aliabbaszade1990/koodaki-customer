@@ -64,6 +64,7 @@ export class SigninComponent implements OnInit {
       },
       error: (error) => {
         this.inProgress = false;
+        this.snackbar.fail(error.message);
       },
     });
   }

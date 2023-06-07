@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, map, Observable, retry, throwError } from 'rxjs';
+import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { sessionExpired } from '../+state/core.actions';
 import { environment } from '../../../../environments/environment';
 import { StorageService } from '../services/storage.service';
@@ -48,8 +48,8 @@ export class CoreInterceptor implements HttpInterceptor {
           }
         }),
         catchError((error) => {
-          this.handleErrors(error);
-          return throwError(() => Error(error && error.name));
+          this.handleErrors(error.error);
+          return throwError(error.error);
         })
       );
     } else {
