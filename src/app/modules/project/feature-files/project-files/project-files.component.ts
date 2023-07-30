@@ -134,7 +134,8 @@ export class ProjectFilesComponent implements OnInit {
   updateFile() {
     this.fileApi.update(this.currentItem).subscribe({
       next: (result) => {
-        this.currentItem = result;
+        this.currentItem.selected = result.selected;
+        this.currentItem.comment = result.comment;
       },
       error: (error) => {
         this.currentItem.selected = false;

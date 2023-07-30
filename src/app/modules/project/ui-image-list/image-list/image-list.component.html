@@ -23,9 +23,45 @@
       </div>
     </div>
 
-    <p class="text-xs text-ellipsis mt-2 mb-8 text-center">
+    <p class="text-xs text-ellipsis mt-2 mb-8 text-center hidden sm:block">
       {{ image.name }}
     </p>
+
+    <!-- Toolbar -->
+    <div class="flex items-center justify-end sm:hidden pt-1 pb-5 gap-3">
+      <button
+        mat-icon-button
+        (click)="onClickSelect(image)"
+        matTooltip="انتخاب کنید"
+        color="primary"
+        [disabled]="project?.finalized"
+      >
+        <mat-icon
+          >{{ image && image.selected ? "bookmark" : "bookmark_outline" }}
+        </mat-icon>
+      </button>
+      <div class="grow"></div>
+      <button
+        mat-icon-button
+        (click)="onClickComment(image)"
+        matTooltip="یادداشت بگذارید"
+        [disabled]="!(image && image.selected) || project?.finalized"
+      >
+        <mat-icon
+          [color]="image?.comment && !project?.finalized ? 'primary' : ''"
+          >{{ image?.comment ? "chat_bubble" : "chat_bubble_outline" }}
+        </mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="onClickDelete(image)"
+        matTooltip="حذف کنید"
+        color="warn"
+        [disabled]="project?.finalized"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </ng-container>
 </ng-container>
 
