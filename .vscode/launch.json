@@ -3,14 +3,8 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm run start",
+      "command": "npm run serve",
       "name": "serve:local",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "npm run start:local:dev",
-      "name": "serve:local:dev",
       "request": "launch",
       "type": "node-terminal"
     },

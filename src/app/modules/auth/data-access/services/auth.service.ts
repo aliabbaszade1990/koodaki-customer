@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CoreFacade, StorageService } from 'src/app/modules/core';
 import { AuthApiService } from '../apis/auth-api.service';
 import { LoginDTO, UserWithTokenResponse } from '../dto/auth.dto';
@@ -18,12 +18,13 @@ export class AuthService {
     this.storage.saveAccessToken(result.accessToken);
   }
 
-  async login(model: LoginDTO): Promise<void> {
-    const loginResult: UserWithTokenResponse = await firstValueFrom(
-      this.authApi.login(model)
+  login(model: LoginDTO): Observable<UserWithTokenResponse> {
+    return this.authApi.login(model).pipe(
+      tap((result) => {
+        this.storeUserTokens(result);
+        this.coreFacade.setUser(result.user);
+      })
     );
-    this.storeUserTokens(loginResult);
-    this.coreFacade.setUser(loginResult.user);
   }
 
   logout(): void {

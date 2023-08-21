@@ -26,13 +26,13 @@
           ورود
         </button>
         <div class="right">
-          <div *ngIf="(time | async) !== 0; else sendAgainButton">
-            {{ time | async }} <span class="op6">ثانیه</span>
+          <div *ngIf="remainingTime > 0; else sendAgainButton">
+            {{ remainingTime }} <span class="op6">ثانیه</span>
           </div>
           <ng-template #sendAgainButton>
             <button
               mat-flat-button
-              [disabled]="inProgress"
+              color="primary"
               (click)="callOtpAgain()"
               class="w-full"
             >

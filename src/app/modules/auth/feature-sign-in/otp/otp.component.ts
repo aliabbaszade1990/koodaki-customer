@@ -6,12 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, filter } from 'rxjs';
-import {
-  CoreFacade,
-  SnackbarService,
-  StorageService,
-} from 'src/app/modules/core';
+import { SnackbarService, StorageService } from 'src/app/modules/core';
 import { NumberUtility } from 'src/app/shared/utilities';
 import { SubSink } from 'subsink';
 import { AuthApiService } from '../../data-access/apis/auth-api.service';
@@ -29,7 +24,6 @@ export class OtpComponent implements OnInit {
     private authService: AuthService,
     private authApi: AuthApiService,
     private storage: StorageService,
-    private coreFacade: CoreFacade,
     private snackbar: SnackbarService
   ) {}
 
@@ -41,25 +35,17 @@ export class OtpComponent implements OnInit {
   });
 
   subsink = new SubSink();
-  time: Observable<number> = new Observable();
+  remainingTime: number = 0;
   inProgress = false;
   ngOnInit(): void {
     this.startCountDownTimer();
-    this.listenStore();
-    this.time.subscribe((number: number) => {
-      if (number === 0) {
-        this.form.controls['code'].reset();
-      }
-    });
   }
 
   startCountDownTimer(): void {
-    this.time = NumberUtility.countDown(180);
-  }
+    NumberUtility.countDown(2).subscribe((value) => {
+      this.remainingTime = value;
 
-  listenStore() {
-    this.coreFacade.user$.pipe(filter((u) => !!u)).subscribe((user) => {
-      this.router.navigate(['panel/project/list']);
+      if (this.remainingTime === 0) this.form.controls['code'].reset();
     });
   }
 
@@ -70,7 +56,14 @@ export class OtpComponent implements OnInit {
       password: this.form.controls['code'].value,
     };
 
-    this.authService.login(model);
+    this.authService.login(model).subscribe({
+      next: (result) => {
+        this.router.navigate(['panel/project/list']);
+      },
+      error: (error: Error) => {
+        this.snackbar.fail(error.message);
+      },
+    });
   }
 
   private standardizePhoneNumber(phoneNumber: string): string {
