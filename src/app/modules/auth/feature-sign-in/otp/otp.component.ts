@@ -42,7 +42,7 @@ export class OtpComponent implements OnInit {
   }
 
   startCountDownTimer(): void {
-    NumberUtility.countDown(2).subscribe((value) => {
+    NumberUtility.countDown(180).subscribe((value) => {
       this.remainingTime = value;
 
       if (this.remainingTime === 0) this.form.controls['code'].reset();
